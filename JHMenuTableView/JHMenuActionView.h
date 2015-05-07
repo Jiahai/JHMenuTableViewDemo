@@ -12,6 +12,7 @@
 @protocol JHMenuActionViewDelegate <NSObject>
 
 - (void)actionViewEventHandler:(JHActionBlock)actionBlock;
+- (void)moreButtonEventHandler;
 
 @end
 
@@ -20,9 +21,16 @@
     
 }
 
+@property (nonatomic, strong)       UIButton    *moreBtn;
+
 @property (nonatomic, assign)       id<JHMenuActionViewDelegate>   delegate;
+/**
+ *  Menu是否能够分开展示
+ */
+@property (nonatomic, readonly)     BOOL        canDivision;
+@property (nonatomic, getter=divisionOriginX)   CGFloat     divisionOriginX;
 
 - (void)setActions:(NSArray *)actions;
 
-//- (instancetype)initWithFrame:(CGRect)rect actions:(NSArray *)actions;
+- (void)setMoreButtonHidden:(BOOL)hidden;
 @end

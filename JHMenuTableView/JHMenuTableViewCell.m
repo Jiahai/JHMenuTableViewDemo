@@ -10,6 +10,9 @@
 #import "JHMicro.h"
 #import "UIView+JHExtension.h"
 
+
+#define JHMenuTriggerDistance   (JHActionButtonWidth*2/3)           //触发Menu动画的距离
+
 @interface JHMenuTableViewCell ()
 @property (nonatomic, assign)   CGFloat                         startOriginX;
 //@property (nonatomic, assign)       CGPoint                         lastPoint;
@@ -61,31 +64,42 @@
     
     CGRect fromRect = self.customView.frame;
     CGRect toRect = fromRect;
-    switch (menuState) {
+    switch (_menuState) {
         case JHMenuTableViewCellState_Common:
         {
-            //self.customView.jh_originX = 0;
             toRect.origin.x = 0;
+            [self.actionsView setMoreButtonHidden:NO];
+        }
+            break;
+        case JHMenuTableViewCellState_Division:
+        {
+            toRect.origin.x = self.actionsView.divisionOriginX;
+            [self.actionsView setMoreButtonHidden:NO];
         }
             break;
         case JHMenuTableViewCellState_Expanded:
         {
-//            self.customView.jh_originX = -self.actionsView.jh_width;
             toRect.origin.x = -self.actionsView.jh_width;
+            [self.actionsView setMoreButtonHidden:YES];
         }
             break;
     }
     
-    [UIView animateWithDuration:0.5 animations:^{
+    [UIView animateWithDuration:JHMenuExpandAnimationDuration animations:^{
         self.customView.frame = toRect;
     }];
 }
 
 - (void)setDeltaX:(CGFloat)deltaX
 {
-//    CGFloat originX = self.customView.jh_width + deltaX;
-    
     CGFloat originX = self.startOriginX + deltaX;
+    
+    if(_menuState == JHMenuTableViewCellState_Division)
+    {
+        //分段显示时，移动customView处理更多按钮的动画
+        if(deltaX < 0)
+            self.actionsView.moreBtn.alpha = 1 - MIN(1, ABS(deltaX)/JHMenuTriggerDistance);
+    }
     
     if(originX > 0)
         originX = 0;
@@ -105,20 +119,42 @@
     switch (_menuState) {
         case JHMenuTableViewCellState_Common:
         {
-            if(deltaX < -(JHActionButtonWidth*2/3))
+            if(deltaX < -JHMenuTriggerDistance)
+            {
+                self.menuState = self.actionsView.canDivision ? JHMenuTableViewCellState_Division : JHMenuTableViewCellState_Expanded;
+            }
+            else
+            {
+                self.menuState = JHMenuTableViewCellState_Common;
+            }
+        }
+            break;
+        case JHMenuTableViewCellState_Division:
+        {
+            if(deltaX < -JHMenuTriggerDistance)
             {
                 self.menuState = JHMenuTableViewCellState_Expanded;
             }
-            else
+            else if(deltaX > JHMenuTriggerDistance)
+            {
                 self.menuState = JHMenuTableViewCellState_Common;
+            }
+            else
+            {
+                self.menuState = JHMenuTableViewCellState_Division;
+            }
         }
             break;
         case JHMenuTableViewCellState_Expanded:
         {
-            if(deltaX > JHActionButtonWidth*2/3)
+            if(deltaX > JHMenuTriggerDistance)
+            {
                 self.menuState = JHMenuTableViewCellState_Common;
+            }
             else
+            {
                 self.menuState = JHMenuTableViewCellState_Expanded;
+            }
         }
             break;
     }
@@ -135,5 +171,9 @@
         
         actionBlock(self, [tableView indexPathForCell:self]);
     }
+}
+- (void)moreButtonEventHandler
+{
+    self.menuState = JHMenuTableViewCellState_Expanded;
 }
 @end

@@ -10,4 +10,11 @@
 
 
 const NSInteger     JHActionButtonWidth = 58;
+
+const NSInteger     JHActionButtonTextFontSize = 14;
+
 const BOOL          JHActionMoreButtonShow = YES;
+
+const NSInteger     JHActionMoreButtonIndex = 1;
+
+const float         JHMenuExpandAnimationDuration = 0.5;

@@ -14,6 +14,7 @@
 
 @interface ViewController ()
 @property (nonatomic, strong)           NSArray     *actions;
+@property (nonatomic, strong)           NSArray     *actions1;
 @end
 
 @implementation ViewController
@@ -25,7 +26,7 @@
     [_tableView openJHTableViewMenu];
     
     JHMenuAction *action = [[JHMenuAction alloc] init];
-    action.title = @"标为 已读";
+    action.title = @"标为\n已读";
     action.titleColor = [UIColor whiteColor];
     action.backgroundColor = JHRGBA(148, 158, 167, 1);
     action.actionBlock = ^(JHMenuTableViewCell *cell, NSIndexPath *indexPath){
@@ -34,7 +35,7 @@
     
     
     JHMenuAction *action1 = [[JHMenuAction alloc] init];
-    action1.title = @"标为 红旗";
+    action1.title = @"标为\n红旗";
     action1.titleColor = [UIColor whiteColor];
     action1.backgroundColor = JHRGBA(159, 169, 178, 1);
     action1.actionBlock = ^(JHMenuTableViewCell *cell, NSIndexPath *indexPath){
@@ -58,6 +59,7 @@
     };
     
     self.actions = @[action,action1,action2,action3];
+    self.actions1 = @[action,action2,action3];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -80,6 +82,11 @@
         UILabel *textField = [[UILabel alloc] initWithFrame:CGRectMake(0, 6, 120, 32)];
         textField.tag = 88;
         [cell.customView addSubview:textField];
+    }
+    
+    if(indexPath.row % 3 == 0)
+    {
+        cell.actions = self.actions1;
     }
     
     UILabel *label = (UILabel *)[cell.customView viewWithTag:88];
