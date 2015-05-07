@@ -55,13 +55,13 @@
     [_actionsView setActions:actions];
 }
 
-- (void)setMenuState:(JHMenuTableViewCellState)swipeState
+- (void)setMenuState:(JHMenuTableViewCellState)menuState
 {
-    _menuState = swipeState;
+    _menuState = menuState;
     
     CGRect fromRect = self.customView.frame;
     CGRect toRect = fromRect;
-    switch (swipeState) {
+    switch (menuState) {
         case JHMenuTableViewCellState_Common:
         {
             //self.customView.jh_originX = 0;
@@ -126,7 +126,7 @@
 
 //- (CGPoint)
 
-#pragma mark - JHSwipeActionViewDelegate
+#pragma mark - JHMenuActionViewDelegate
 - (void)actionViewEventHandler:(JHActionBlock)actionBlock
 {
     if(actionBlock)

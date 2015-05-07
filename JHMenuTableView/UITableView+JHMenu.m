@@ -16,7 +16,7 @@
 @property (nonatomic, strong)   UIPanGestureRecognizer          *panGestureRecognizer;
 @end
 
-@implementation UITableView (JHSwipe)
+@implementation UITableView (JHMenu)
 
 #pragma mark - 关联属性
 - (void)setCurrentMenuTableCell:(JHMenuTableViewCell *)currentMenuTableCell
@@ -49,7 +49,7 @@
 
 #pragma mark -
 
-- (void)openJHSwipeMenu
+- (void)openJHTableViewMenu
 {
     if(self.panGestureRecognizer == nil)
     {
@@ -60,7 +60,7 @@
     [self addGestureRecognizer:self.panGestureRecognizer];
 }
 
-- (void)closeJHSwipeMenu
+- (void)closeJHTableViewMenu
 {
     [self removeGestureRecognizer:self.panGestureRecognizer];
     self.panGestureRecognizer = nil;

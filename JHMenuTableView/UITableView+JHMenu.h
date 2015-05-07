@@ -11,8 +11,8 @@
 
 @interface UITableView (JHMenu) <UIGestureRecognizerDelegate>
 
-- (void)openJHSwipeMenu;
+- (void)openJHTableViewMenu;
 
-- (void)closeJHSwipeMenu;
+- (void)closeJHTableViewMenu;
 
 @end

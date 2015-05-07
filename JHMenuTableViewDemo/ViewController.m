@@ -22,7 +22,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    [_tableView openJHSwipeMenu];
+    [_tableView openJHTableViewMenu];
     
     JHMenuAction *action = [[JHMenuAction alloc] init];
     action.title = @"标为 已读";
