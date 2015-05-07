@@ -33,20 +33,6 @@
     return objc_getAssociatedObject(self, @selector(currentMenuTableCell));
 }
 
-//- (void)setSwipeState:(JHSwipeTableViewCellState)swipeState
-//{
-//    [self willChangeValueForKey:@"swipeState"];
-//    
-//    objc_setAssociatedObject(self, @selector(swipeState), @(swipeState), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-//    
-//    [self didChangeValueForKey:@"swipeState"];
-//}
-//
-//- (JHSwipeTableViewCellState)swipeState
-//{
-//    return [objc_getAssociatedObject(self, @selector(swipeState)) integerValue];
-//}
-
 - (void)setPanGestureRecognizer:(UIPanGestureRecognizer *)panGestureRecognizer
 {
     [self willChangeValueForKey:@"panGestureRecognizer"];
@@ -80,31 +66,28 @@
     self.panGestureRecognizer = nil;
 }
 
+
+#pragma mark - 手势处理
 - (void)panGestureHandler:(UIPanGestureRecognizer *)gesture
 {
     CGFloat deltaX = [gesture translationInView:self].x;
     switch (gesture.state) {
         case UIGestureRecognizerStateBegan:
         {
-            JHLog(@"%d",self.currentMenuTableCell.swipeState);
-//            self.swipeState = JHSwipeTableViewCellState_Moving;
             CGPoint point = [gesture locationInView:self];
             NSIndexPath *indexPath = [self indexPathForRowAtPoint:point];
             self.currentMenuTableCell = (JHMenuTableViewCell *)[self cellForRowAtIndexPath:indexPath];
-//            JHLog(@"UIGestureRecognizerStateBegan,%@",indexPath);
             [self.currentMenuTableCell swipeBeganWithDeltaX:deltaX];
         }
             break;
         case UIGestureRecognizerStateChanged:
         {
             self.currentMenuTableCell.deltaX = deltaX;
-//            JHLog(@"UIGestureRecognizerStateChanged,%f",deltaX);
         }
             break;
         case UIGestureRecognizerStateEnded:
         {
             [self.currentMenuTableCell swipeEndWithDeltaX:deltaX];
-//            JHLog(@"UIGestureRecognizerStateEnded，%f",deltaX);
         }
             break;
         default:
@@ -118,7 +101,7 @@
 {
     if ( gestureRecognizer == self.panGestureRecognizer )
     {
-        if(self.currentMenuTableCell && self.currentMenuTableCell.swipeState != JHMenuTableViewCellState_Common)
+        if(self.currentMenuTableCell && self.currentMenuTableCell.menuState != JHMenuTableViewCellState_Common)
         {
             CGPoint point = [gestureRecognizer locationInView:self];
             NSIndexPath *indexPath = [self indexPathForRowAtPoint:point];
@@ -126,7 +109,7 @@
             
             if(cell != self.currentMenuTableCell)
             {
-                self.currentMenuTableCell.swipeState = JHMenuTableViewCellState_Common;
+                self.currentMenuTableCell.menuState = JHMenuTableViewCellState_Common;
                 return NO;
             }
         }

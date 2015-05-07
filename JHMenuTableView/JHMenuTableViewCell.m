@@ -23,37 +23,41 @@
     self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
     if(self)
     {
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        
         self.actionsView = [[JHMenuActionView alloc] initWithFrame:self.bounds];
+        self.actionsView.backgroundColor = [UIColor whiteColor];
         self.actionsView.delegate = self;
-        self.actionsView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleHeight;
         [self addSubview:_actionsView];
         
         self.customView = [[UIView alloc] initWithFrame:self.bounds];
-        self.customView.backgroundColor = [UIColor redColor];
-        self.customView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        self.customView.backgroundColor = [UIColor whiteColor];
         [self addSubview:_customView];
     }
     return self;
 }
 
+- (void)prepareForReuse
+{
+    self.menuState = JHMenuTableViewCellState_Common;
+}
+
 - (void)layoutSubviews
 {
-    
+    self.actionsView.frame = CGRectMake(self.bounds.size.width-JHActionButtonWidth*_actions.count, 0, JHActionButtonWidth*_actions.count, self.bounds.size.height);
+    self.customView.frame = CGRectMake(_customView.frame.origin.x, _customView.frame.origin.y, self.bounds.size.width, self.bounds.size.height);
 }
 
 - (void)setActions:(NSArray *)actions
 {
     _actions = actions;
     
-    self.actionsView.frame = CGRectMake(self.bounds.size.width-JHActionButtonWidth*_actions.count, 0, JHActionButtonWidth*actions.count, self.bounds.size.height);
-    
     [_actionsView setActions:actions];
-    
 }
 
-- (void)setSwipeState:(JHMenuTableViewCellState)swipeState
+- (void)setMenuState:(JHMenuTableViewCellState)swipeState
 {
-    _swipeState = swipeState;
+    _menuState = swipeState;
     
     CGRect fromRect = self.customView.frame;
     CGRect toRect = fromRect;
@@ -98,23 +102,23 @@
 
 - (void)swipeEndWithDeltaX:(CGFloat)deltaX
 {
-    switch (_swipeState) {
+    switch (_menuState) {
         case JHMenuTableViewCellState_Common:
         {
             if(deltaX < -(JHActionButtonWidth*2/3))
             {
-                self.swipeState = JHMenuTableViewCellState_Expanded;
+                self.menuState = JHMenuTableViewCellState_Expanded;
             }
             else
-                self.swipeState = JHMenuTableViewCellState_Common;
+                self.menuState = JHMenuTableViewCellState_Common;
         }
             break;
         case JHMenuTableViewCellState_Expanded:
         {
             if(deltaX > JHActionButtonWidth*2/3)
-                self.swipeState = JHMenuTableViewCellState_Common;
+                self.menuState = JHMenuTableViewCellState_Common;
             else
-                self.swipeState = JHMenuTableViewCellState_Expanded;
+                self.menuState = JHMenuTableViewCellState_Expanded;
         }
             break;
     }

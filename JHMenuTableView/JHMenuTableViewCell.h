@@ -19,7 +19,7 @@ typedef NS_ENUM(NSInteger, JHMenuTableViewCellState)
 
 @interface JHMenuTableViewCell : UITableViewCell <JHMenuActionViewDelegate,UIGestureRecognizerDelegate>
 
-@property (nonatomic, assign)   JHMenuTableViewCellState   swipeState;
+@property (nonatomic, assign)   JHMenuTableViewCellState   menuState;
 
 @property (nonatomic, strong)   UIView                      *customView;
 @property (nonatomic, strong)   JHMenuActionView           *actionsView;
