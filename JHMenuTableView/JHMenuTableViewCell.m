@@ -160,8 +160,6 @@
     }
 }
 
-//- (CGPoint)
-
 #pragma mark - JHMenuActionViewDelegate
 - (void)actionViewEventHandler:(JHActionBlock)actionBlock
 {

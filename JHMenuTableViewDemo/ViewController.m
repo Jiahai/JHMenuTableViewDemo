@@ -7,10 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "UITableView+JHMenu.h"
-#import "JHMenuTableViewCell.h"
-#import "JHMenuAction.h"
-#import "JHMicro.h"
+#import "JHMenuTableView.h"
 
 @interface ViewController ()
 @property (nonatomic, strong)           NSArray     *actions;
@@ -84,9 +81,15 @@
         [cell.customView addSubview:textField];
     }
     
-    if(indexPath.row % 3 == 0)
+    //此步骤可针对不同的cell修改JHAction
+    //使用时请注意，防止JHAction错乱
+    if(indexPath.row % 2 == 0)
     {
         cell.actions = self.actions1;
+    }
+    else
+    {
+        cell.actions = self.actions;
     }
     
     UILabel *label = (UILabel *)[cell.customView viewWithTag:88];

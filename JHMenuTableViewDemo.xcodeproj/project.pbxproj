@@ -33,6 +33,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9B4604F61AFC446A00CA9E65 /* JHMenuTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JHMenuTableView.h; sourceTree = "<group>"; };
 		9BC7A6BF1AE637C7005C945B /* JHMenuTableViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JHMenuTableViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BC7A6C31AE637C7005C945B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9BC7A6C41AE637C7005C945B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -141,6 +142,7 @@
 		9BC7A6E81AE639B5005C945B /* JHMenuTableView */ = {
 			isa = PBXGroup;
 			children = (
+				9B4604F61AFC446A00CA9E65 /* JHMenuTableView.h */,
 				9BC7A6E91AE639B5005C945B /* JHMenuAction.h */,
 				9BC7A6EA1AE639B5005C945B /* JHMenuAction.m */,
 				9BC7A6EB1AE639B5005C945B /* JHMenuActionView.h */,
@@ -456,6 +458,7 @@
 				9BC7A6E41AE637C7005C945B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9BC7A6E51AE637C7005C945B /* Build configuration list for PBXNativeTarget "JHMenuTableViewDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -464,6 +467,7 @@
 				9BC7A6E71AE637C7005C945B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -44,6 +44,6 @@ extern const BOOL           JHActionMoreButtonShow;
 extern const NSInteger      JHActionMoreButtonIndex;
 
 /**
- *  Menu展开/收缩的动画持续时间
+ *  Menu展开/收缩的动画持续时间，单位为秒
  */
 extern const float          JHMenuExpandAnimationDuration;

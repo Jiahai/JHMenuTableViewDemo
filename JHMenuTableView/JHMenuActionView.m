@@ -24,6 +24,8 @@
     
     _actions = actions;
     
+    _canDivision = NO;
+    
     for(NSInteger i=0; i<(NSInteger)[_actions count]; i++)
     {
         JHMenuAction *action = [_actions objectAtIndex:i];
