@@ -21,6 +21,7 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     [_tableView openJHTableViewMenu];
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     JHMenuAction *action = [[JHMenuAction alloc] init];
     action.title = @"标为\n已读";
@@ -59,6 +60,11 @@
     self.actions1 = @[action,action2,action3];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 58;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 25;
@@ -79,6 +85,8 @@
         UILabel *textField = [[UILabel alloc] initWithFrame:CGRectMake(0, 6, 120, 32)];
         textField.tag = 88;
         [cell.customView addSubview:textField];
+        cell.customView.layer.borderColor = [UIColor blackColor].CGColor;
+        cell.customView.layer.borderWidth = 0.5;
     }
     
     //此步骤可针对不同的cell修改JHAction
