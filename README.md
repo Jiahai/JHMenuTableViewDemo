@@ -2,28 +2,28 @@ JHMenuTableViewDemo
 ====
 
 #如何使用？
-#####1、导入头文件
+####*1、导入头文件
 ```Objective-C
 #import "JHMenuTableView.h"
 ```
 
-####2、TableView调用openJHTableViewMenu方法
+####*2、TableView调用openJHTableViewMenu方法
 ```Objective-C
 [_tableView openJHTableViewMenu];
 ```
 
-3、定义Cell的菜单动作数组
+####*3、定义Cell的菜单动作数组
 ```Objective-C
 JHMenuAction *action = [[JHMenuAction alloc] init];
-    action.title = @"标为\n已读";
-    action.titleColor = [UIColor whiteColor];
-    action.backgroundColor = JHRGBA(148, 158, 167, 1);
-    action.actionBlock = ^(JHMenuTableViewCell *cell, NSIndexPath *indexPath){
-        JHLog(@"标为已读:%@,row:%d",cell,indexPath.row);
-    };
+action.title = @"标为\n已读";
+action.titleColor = [UIColor whiteColor];
+action.backgroundColor = JHRGBA(148, 158, 167, 1);
+action.actionBlock = ^(JHMenuTableViewCell *cell, NSIndexPath *indexPath){
+    JHLog(@"标为已读:%@,row:%d",cell,indexPath.row);
+};
 ```
 
-4、UITableViewCell继承JHMenuTableViewCell并设置相应的Action数组
+####*4、UITableViewCell继承JHMenuTableViewCell并设置相应的Action数组
 ```Objective-C
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
