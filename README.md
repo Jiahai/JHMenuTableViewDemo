@@ -1,8 +1,15 @@
 JHMenuTableViewDemo
 ====
-仿网易邮箱列表菜单
+仿网易邮箱列表侧滑菜单
 ----
-#如何使用？
+
+#目录
+* [如何使用？](#use)
+* [配置JHMenuTableView参数](#config)
+* [效果图](#gif)
+
+<a name="use"/>
+##如何使用？
 ####1、导入头文件
 ```Objective-C
 #import "JHMenuTableView.h"
@@ -22,6 +29,7 @@ action.backgroundColor = JHRGBA(148, 158, 167, 1);
 action.actionBlock = ^(JHMenuTableViewCell *cell, NSIndexPath *indexPath){
     JHLog(@"标为已读:%@,row:%d",cell,indexPath.row);
 };
+self.actions = @[action];
 ```
 
 ####4、UITableViewCell继承JHMenuTableViewCell并设置相应的Action数组
@@ -54,7 +62,6 @@ action.actionBlock = ^(JHMenuTableViewCell *cell, NSIndexPath *indexPath){
     {
         cell.actions = self.actions;
     }
-    
     UILabel *label = (UILabel *)[cell.customView viewWithTag:88];
     label.textAlignment = NSTextAlignmentCenter;
     label.text = [NSString stringWithFormat:@"%d",indexPath.row];
@@ -62,8 +69,8 @@ action.actionBlock = ^(JHMenuTableViewCell *cell, NSIndexPath *indexPath){
 }
 
 ```
-
-#配置JHMenuTableView参数
+<a name="config"/>
+##配置JHMenuTableView参数
 ####在JHMicro.h文件中配置JHMenuTableView参数
 
 ```Objective-C
@@ -92,3 +99,7 @@ extern const NSInteger      JHActionMoreButtonIndex;
  */
 extern const float          JHMenuExpandAnimationDuration;
 ```
+<a name="gif"/>
+##效果图
+![]()
+
