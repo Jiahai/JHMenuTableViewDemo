@@ -2,17 +2,17 @@ JHMenuTableViewDemo
 ====
 
 #如何使用？
-####*1、导入头文件
+####1、导入头文件
 ```Objective-C
 #import "JHMenuTableView.h"
 ```
 
-####*2、TableView调用openJHTableViewMenu方法
+####2、TableView调用openJHTableViewMenu方法
 ```Objective-C
 [_tableView openJHTableViewMenu];
 ```
 
-####*3、定义Cell的菜单动作数组
+####3、定义Cell的菜单动作数组
 ```Objective-C
 JHMenuAction *action = [[JHMenuAction alloc] init];
 action.title = @"标为\n已读";
@@ -23,7 +23,7 @@ action.actionBlock = ^(JHMenuTableViewCell *cell, NSIndexPath *indexPath){
 };
 ```
 
-####*4、UITableViewCell继承JHMenuTableViewCell并设置相应的Action数组
+####4、UITableViewCell继承JHMenuTableViewCell并设置相应的Action数组
 ```Objective-C
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -60,4 +60,35 @@ action.actionBlock = ^(JHMenuTableViewCell *cell, NSIndexPath *indexPath){
     return cell;
 }
 
+```
+
+#配置JHMenuTableView参数
+####在JHMicro.h文件中配置JHMenuTableView参数
+>JHMenuTableView
+>>JHMicro.h
+```Objective-C
+/**
+ *  JHActionButton的宽度
+ */
+extern const NSInteger      JHActionButtonWidth;
+
+/**
+ *  JHActionButton文本的字体
+ */
+extern const NSInteger      JHActionButtonTextFontSize;
+
+/**
+ *  展开Menu时，是否显示更多按钮
+ */
+extern const BOOL           JHActionMoreButtonShow;
+
+/**
+ *  更多按钮出现的index，从右向左，从0开始
+ */
+extern const NSInteger      JHActionMoreButtonIndex;
+
+/**
+ *  Menu展开/收缩的动画持续时间，单位为秒
+ */
+extern const float          JHMenuExpandAnimationDuration;
 ```
