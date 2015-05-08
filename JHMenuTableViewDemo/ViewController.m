@@ -30,7 +30,6 @@
         JHLog(@"标为已读:%@,row:%d",cell,indexPath.row);
     };
     
-    
     JHMenuAction *action1 = [[JHMenuAction alloc] init];
     action1.title = @"标为\n红旗";
     action1.titleColor = [UIColor whiteColor];

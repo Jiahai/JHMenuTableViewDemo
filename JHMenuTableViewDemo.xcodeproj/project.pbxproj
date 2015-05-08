@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9B7342641AFCA42D001E4ABE /* JHMenuTableViewDemo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 9B7342631AFCA42D001E4ABE /* JHMenuTableViewDemo.gif */; };
 		9BC7A6C51AE637C7005C945B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC7A6C41AE637C7005C945B /* main.m */; };
 		9BC7A6C81AE637C7005C945B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC7A6C71AE637C7005C945B /* AppDelegate.m */; };
 		9BC7A6CB1AE637C7005C945B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC7A6CA1AE637C7005C945B /* ViewController.m */; };
@@ -35,7 +34,6 @@
 
 /* Begin PBXFileReference section */
 		9B4604F61AFC446A00CA9E65 /* JHMenuTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JHMenuTableView.h; sourceTree = "<group>"; };
-		9B7342631AFCA42D001E4ABE /* JHMenuTableViewDemo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = JHMenuTableViewDemo.gif; sourceTree = "<group>"; };
 		9BC7A6BF1AE637C7005C945B /* JHMenuTableViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JHMenuTableViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BC7A6C31AE637C7005C945B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9BC7A6C41AE637C7005C945B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -81,14 +79,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9B7342621AFCA42D001E4ABE /* SnapShot */ = {
-			isa = PBXGroup;
-			children = (
-				9B7342631AFCA42D001E4ABE /* JHMenuTableViewDemo.gif */,
-			);
-			path = SnapShot;
-			sourceTree = SOURCE_ROOT;
-		};
 		9BC7A6B61AE637C7005C945B = {
 			isa = PBXGroup;
 			children = (
@@ -118,7 +108,6 @@
 				9BC7A6CC1AE637C7005C945B /* Main.storyboard */,
 				9BC7A6CF1AE637C7005C945B /* Images.xcassets */,
 				9BC7A6D11AE637C7005C945B /* LaunchScreen.xib */,
-				9B7342621AFCA42D001E4ABE /* SnapShot */,
 				9BC7A6C21AE637C7005C945B /* Supporting Files */,
 			);
 			path = JHMenuTableViewDemo;
@@ -252,7 +241,6 @@
 			files = (
 				9BC7A6CE1AE637C7005C945B /* Main.storyboard in Resources */,
 				9BC7A6D31AE637C7005C945B /* LaunchScreen.xib in Resources */,
-				9B7342641AFCA42D001E4ABE /* JHMenuTableViewDemo.gif in Resources */,
 				9BC7A6D01AE637C7005C945B /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
