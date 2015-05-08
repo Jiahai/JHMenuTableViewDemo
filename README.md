@@ -1,6 +1,7 @@
 JHMenuTableViewDemo
 ====
-
+仿网易邮箱列表菜单
+----
 #如何使用？
 ####1、导入头文件
 ```Objective-C
@@ -64,8 +65,7 @@ action.actionBlock = ^(JHMenuTableViewCell *cell, NSIndexPath *indexPath){
 
 #配置JHMenuTableView参数
 ####在JHMicro.h文件中配置JHMenuTableView参数
->JHMenuTableView
->>JHMicro.h
+
 ```Objective-C
 /**
  *  JHActionButton的宽度
