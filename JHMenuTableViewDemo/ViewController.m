@@ -21,7 +21,6 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     [_tableView openJHTableViewMenu];
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     JHMenuAction *action = [[JHMenuAction alloc] init];
     action.title = @"标为\n已读";

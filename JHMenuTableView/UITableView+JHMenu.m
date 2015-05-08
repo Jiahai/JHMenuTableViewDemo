@@ -51,6 +51,8 @@
 
 - (void)openJHTableViewMenu
 {
+    self.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
     if(self.panGestureRecognizer == nil)
     {
         self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureHandler:)];
