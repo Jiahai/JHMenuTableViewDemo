@@ -101,5 +101,5 @@ extern const float          JHMenuExpandAnimationDuration;
 ```
 <a name="gif"/>
 ##效果图
-![]()
+![](https://github.com/Jiahai/JHMenuTableViewDemo/blob/master/SnapShot/JHMenuTableViewDemo.gif)
 
