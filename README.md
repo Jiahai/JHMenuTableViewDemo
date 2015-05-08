@@ -9,7 +9,7 @@ JHMenuTableViewDemo
 * [效果图](#gif)
 
 <a name="use"/>
-##如何使用？
+##如何使用？(具体请参看Demo)
 ####1、导入头文件
 ```Objective-C
 #import "JHMenuTableView.h"
