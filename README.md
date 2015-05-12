@@ -11,8 +11,8 @@ JHMenuTableViewDemo
 
 <a name="import" />
 ##如何导入？
-* cocoapods导入： pod 'JHMenuTableView'
-* 手动导入：将JHMenuTableView文件夹中的所有文件添加至工程中
+* cocoapods导入： `pod 'JHMenuTableView'`
+* 手动导入：将`JHMenuTableView`文件夹中的所有文件添加至工程中
 
 <a name="use"/>
 ##如何使用？(具体请参看Demo)
