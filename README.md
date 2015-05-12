@@ -4,23 +4,29 @@ JHMenuTableViewDemo
 ----
 
 #目录
+* [如何导入？](#import)
 * [如何使用？](#use)
 * [配置JHMenuTableView参数](#config)
 * [效果图](#gif)
 
+<a name="import" />
+##如何导入？
+* cocoapods导入： pod 'JHMenuTableView'
+* 手动导入：将JHMenuTableView文件夹中的所有文件添加至工程中
+
 <a name="use"/>
 ##如何使用？(具体请参看Demo)
-####1、导入头文件
+####导入头文件
 ```Objective-C
 #import "JHMenuTableView.h"
 ```
 
-####2、TableView调用openJHTableViewMenu方法
+####TableView调用openJHTableViewMenu方法
 ```Objective-C
 [_tableView openJHTableViewMenu];
 ```
 
-####3、定义Cell的菜单动作数组
+####定义Cell的菜单动作数组
 ```Objective-C
 JHMenuAction *action = [[JHMenuAction alloc] init];
 action.title = @"标为\n已读";
@@ -32,7 +38,7 @@ action.actionBlock = ^(JHMenuTableViewCell *cell, NSIndexPath *indexPath){
 self.actions = @[action];
 ```
 
-####4、返回JHMenuTableViewCell并设置相应的Action数组，自定义View添加到JHMenuTableViewCell.customView上
+####返回JHMenuTableViewCell并设置相应的Action数组，自定义View添加到JHMenuTableViewCell.customView上
 ```Objective-C
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
