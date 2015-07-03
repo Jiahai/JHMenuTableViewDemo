@@ -103,8 +103,15 @@
     
     if(originX > 0)
         originX = 0;
-    if(originX < -(_actionsView.jh_width))
-        originX = -(_actionsView.jh_width);
+    
+    CGFloat originX_L = -_actionsView.jh_width;
+    if(_actionsView.canDivision && _menuState == JHMenuTableViewCellState_Common)
+    {
+        originX_L = -(_actionsView.jh_width-_actionsView.moreBtn.jh_originX);
+    }
+    
+    if(originX < originX_L)
+        originX = originX_L;
 
     self.customView.jh_originX = originX;
 }
