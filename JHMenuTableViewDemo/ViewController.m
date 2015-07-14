@@ -12,6 +12,7 @@
 @interface ViewController ()
 @property (nonatomic, strong)           NSArray     *actions;
 @property (nonatomic, strong)           NSArray     *actions1;
+@property (nonatomic, strong)           NSArray     *iActions;
 @end
 
 @implementation ViewController
@@ -22,7 +23,7 @@
     
     [_tableView openJHTableViewMenu];
     
-    JHMenuAction *action = [[JHMenuAction alloc] init];
+    JHMenuTextAction *action = [[JHMenuTextAction alloc] init];
     action.title = @"标为\n已读";
     action.titleColor = [UIColor whiteColor];
     action.backgroundColor = JHRGBA(148, 158, 167, 1);
@@ -30,7 +31,7 @@
         JHLog(@"标为已读:%@,row:%d",cell,indexPath.row);
     };
     
-    JHMenuAction *action1 = [[JHMenuAction alloc] init];
+    JHMenuTextAction *action1 = [[JHMenuTextAction alloc] init];
     action1.title = @"标为\n红旗";
     action1.titleColor = [UIColor whiteColor];
     action1.backgroundColor = JHRGBA(159, 169, 178, 1);
@@ -38,7 +39,7 @@
         JHLog(@"标为红旗:%@,row:%d",cell,indexPath.row);
     };
     
-    JHMenuAction *action2 = [[JHMenuAction alloc] init];
+    JHMenuTextAction *action2 = [[JHMenuTextAction alloc] init];
     action2.title = @"移动";
     action2.titleColor = [UIColor whiteColor];
     action2.backgroundColor = JHRGBA(178, 185, 191, 1);
@@ -46,7 +47,7 @@
         JHLog(@"移动:%@,row:%d",cell,indexPath.row);
     };
     
-    JHMenuAction *action3 = [[JHMenuAction alloc] init];
+    JHMenuTextAction *action3 = [[JHMenuTextAction alloc] init];
     action3.title = @"删除";
     action3.titleColor = [UIColor whiteColor];
     action3.backgroundColor = JHRGBA(250, 88, 89, 1);
@@ -56,6 +57,15 @@
     
     self.actions = @[action,action1,action2,action3];
     self.actions1 = @[action,action2,action3];
+    
+    JHMenuImageAction *iAction = [[JHMenuImageAction alloc] init];
+    iAction.image_normal = @"jhmenu_unchecked.png";
+    iAction.image_selected = @"jhmenu_checked.png";
+    iAction.actionBlock = ^(JHMenuTableViewCell *cell, NSIndexPath *indexPath){
+
+        JHLog(@"选中:%@,row:%d",cell,indexPath.row);
+    };
+    self.iActions = @[iAction];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -76,9 +86,9 @@
     
     if(cell == nil)
     {
-        cell
-        = [[JHMenuTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-        cell.actions = self.actions;
+        cell = [[JHMenuTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell.rightActions = self.actions;
+        cell.leftActions = self.iActions;
         
         UILabel *textField = [[UILabel alloc] initWithFrame:CGRectMake(0, 6, 120, 32)];
         textField.tag = 88;
@@ -91,12 +101,14 @@
     //使用时请注意，防止JHAction错乱
     if(indexPath.row % 2 == 0)
     {
-        cell.actions = self.actions1;
+        cell.rightActions = self.actions1;
     }
     else
     {
-        cell.actions = self.actions;
+        cell.rightActions = self.actions;
     }
+    
+    
     
     UILabel *label = (UILabel *)[cell.customView viewWithTag:88];
     label.textAlignment = NSTextAlignmentCenter;

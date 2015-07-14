@@ -7,16 +7,23 @@
 //
 
 #import <Foundation/Foundation.h>
-@class UIColor;
 @class JHMenuTableViewCell;
 
 typedef void (^JHActionBlock)(JHMenuTableViewCell *cell,NSIndexPath *indexPath);
 
-@interface JHMenuAction : NSObject
 
-@property (nonatomic, copy)         NSString        *title;
-@property (nonatomic, strong)       UIColor         *titleColor;
-@property (nonatomic, strong)       UIColor         *backgroundColor;
+@protocol JHMenuActionViewDelegate <NSObject>
+@optional
+- (void)leftActionViewEventHandler:(JHActionBlock)actionBlock;
+- (void)leftMoreButtonEventHandler;
+
+- (void)rightActionViewEventHandler:(JHActionBlock)actionBlock;
+- (void)rightMoreButtonEventHandler;
+
+@end
+
+@interface JHMenuAction : NSObject
 
 @property (nonatomic, copy)         JHActionBlock   actionBlock;
 @end
+

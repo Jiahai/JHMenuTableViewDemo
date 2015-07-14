@@ -29,12 +29,12 @@
 extern const NSInteger      JHActionButtonWidth;
 
 /**
- *  JHActionButton文本的字体
+ *  JHTextActionButton文本的字体
  */
-extern const NSInteger      JHActionButtonTextFontSize;
+extern const NSInteger      JHTextActionButtonTextFontSize;
 
 /**
- *  展开Menu时，是否显示更多按钮
+ *  展开Menu时，是否显示更多按钮，暂只支持RightActionView
  */
 extern const BOOL           JHActionMoreButtonShow;
 

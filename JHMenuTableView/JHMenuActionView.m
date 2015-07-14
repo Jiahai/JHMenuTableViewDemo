@@ -1,22 +1,43 @@
 //
-//  JHMenuActionView.h
+//  JHMenuActionView.m
 //  JHMenuTableViewDemo
 //
-//  Created by Jiahai on 15/3/27.
+//  Created by Jiahai on 15/7/13.
 //  Copyright (c) 2015年 Jiahai. All rights reserved.
 //
 
 #import "JHMenuActionView.h"
-#import "JHMenuAction.h"
 #import "JHMicro.h"
-#import "UIView+JHExtension.h"
+#import "JHMenuTextAction.h"
+#import "JHMenuImageAction.h"
 
 @interface JHMenuActionView ()
-@property (nonatomic, strong)       NSArray     *actions;
 @end
 
 @implementation JHMenuActionView
 
+- (void)setState:(JHMenuActionViewState)state
+{
+    _state = state;
+    
+    switch (_state) {
+        case JHMenuActionViewState_Common:
+        {
+            [self setMoreButtonHidden:NO];
+        }
+            break;
+        case JHMenuActionViewState_Division:
+        {
+            [self setMoreButtonHidden:NO];
+        }
+            break;
+        case JHMenuActionViewState_Expanded:
+        {
+            [self setMoreButtonHidden:YES];
+        }
+            break;
+    }
+}
 
 - (void)setActions:(NSArray *)actions
 {
@@ -29,27 +50,52 @@
     for(NSInteger i=0; i<(NSInteger)[_actions count]; i++)
     {
         JHMenuAction *action = [_actions objectAtIndex:i];
-        UIButton *actionBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        actionBtn.titleLabel.font = [UIFont systemFontOfSize:JHActionButtonTextFontSize];
-        [actionBtn setBackgroundColor:action.backgroundColor];
-        [actionBtn setTitle:action.title forState:UIControlStateNormal];
-        [actionBtn setTitleColor:action.titleColor forState:UIControlStateNormal];
-        actionBtn.titleLabel.numberOfLines = 0;
-        actionBtn.frame = CGRectMake(JHActionButtonWidth*i, 0, JHActionButtonWidth, self.bounds.size.height);
-        actionBtn.tag = i;
-        actionBtn.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleHeight;
-        [actionBtn addTarget:self action:@selector(actionButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:actionBtn];
+        
+        if([action isKindOfClass:[JHMenuTextAction class]])
+        {
+            JHMenuTextAction *textAction = (JHMenuTextAction *)action;
+            UIButton *actionBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            actionBtn.titleLabel.font = [UIFont systemFontOfSize:JHTextActionButtonTextFontSize];
+            [actionBtn setBackgroundColor:textAction.backgroundColor];
+            [actionBtn setTitle:textAction.title forState:UIControlStateNormal];
+            [actionBtn setTitleColor:textAction.titleColor forState:UIControlStateNormal];
+            actionBtn.titleLabel.numberOfLines = 0;
+            actionBtn.frame = CGRectMake(JHActionButtonWidth*i, 0, JHActionButtonWidth, self.bounds.size.height);
+            actionBtn.tag = i;
+            actionBtn.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleHeight;
+            [actionBtn addTarget:self action:@selector(actionButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+            [self addSubview:actionBtn];
+        }
+        else if([action isKindOfClass:[JHMenuImageAction class]])
+        {
+            JHMenuImageAction *imageAction = (JHMenuImageAction *)action;
+            UIButton *actionBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            if(imageAction.selected)
+            {
+                [actionBtn setImage:[UIImage imageNamed:imageAction.image_selected] forState:UIControlStateNormal];
+                [actionBtn setImage:[UIImage imageNamed:imageAction.image_normal] forState:UIControlStateSelected];
+            }
+            else
+            {
+                [actionBtn setImage:[UIImage imageNamed:imageAction.image_normal] forState:UIControlStateNormal];
+                [actionBtn setImage:[UIImage imageNamed:imageAction.image_selected] forState:UIControlStateSelected];
+            }
+            actionBtn.frame = CGRectMake(JHActionButtonWidth*i, 0, JHActionButtonWidth, self.bounds.size.height);
+            actionBtn.tag = i;
+            actionBtn.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleHeight;
+            [actionBtn addTarget:self action:@selector(actionButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+            [self addSubview:actionBtn];
+        }
     }
     
     if(JHActionMoreButtonShow && _actions.count-1 > JHActionMoreButtonIndex)
     {
         _canDivision = YES;
         NSInteger i = _actions.count-JHActionMoreButtonIndex-1;
-        JHMenuAction *action = [_actions objectAtIndex:i];
+        JHMenuTextAction *action = [_actions objectAtIndex:i];
         
         self.moreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _moreBtn.titleLabel.font = [UIFont systemFontOfSize:JHActionButtonTextFontSize];
+        _moreBtn.titleLabel.font = [UIFont systemFontOfSize:JHTextActionButtonTextFontSize];
         [_moreBtn setBackgroundColor:action.backgroundColor];
         [_moreBtn setTitle:@"<" forState:UIControlStateNormal];
         [_moreBtn setTitleColor:action.titleColor forState:UIControlStateNormal];
@@ -70,11 +116,6 @@
     }];
 }
 
-- (CGFloat)divisionOriginX
-{
-    return -(self.jh_width - _moreBtn.jh_originX);
-}
-
 /**
  *  清除现有的Actions
  */
@@ -90,30 +131,33 @@
     _actions = nil;
 }
 
-- (void)actionButtonClicked:(UIButton *)btn
+- (void)actionButtonClicked:(UIButton *)actionBtn
 {
-    JHMenuAction *action = [_actions objectAtIndex:btn.tag];
-    
-    if([self.delegate respondsToSelector:@selector(actionViewEventHandler:)])
+    JHMenuAction *action = [self.actions objectAtIndex:actionBtn.tag];
+    if([action isKindOfClass:[JHMenuImageAction class]])
     {
-        [self.delegate actionViewEventHandler:action.actionBlock];
+        JHMenuImageAction *imageAction = (JHMenuImageAction *)action;
+        if(imageAction.checkboxModel)
+        {
+            imageAction.selected = !imageAction.selected;
+            if(imageAction.selected)
+            {
+                [actionBtn setImage:[UIImage imageNamed:imageAction.image_selected] forState:UIControlStateNormal];
+                [actionBtn setImage:[UIImage imageNamed:imageAction.image_normal] forState:UIControlStateSelected];
+            }
+            else
+            {
+                [actionBtn setImage:[UIImage imageNamed:imageAction.image_normal] forState:UIControlStateNormal];
+                [actionBtn setImage:[UIImage imageNamed:imageAction.image_selected] forState:UIControlStateSelected];
+            }
+        }
     }
 }
 
 - (void)moreButtonClicked
 {
-    if([self.delegate respondsToSelector:@selector(moreButtonEventHandler)])
-    {
-        [self.delegate moreButtonEventHandler];
-    }
+    
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
 
 @end

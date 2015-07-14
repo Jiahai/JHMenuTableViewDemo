@@ -9,3 +9,5 @@
 #import "JHMenuTableViewCell.h"
 #import "JHMicro.h"
 #import "UITableView+JHMenu.h"
+#import "JHMenuTextAction.h"
+#import "JHMenuImageAction.h"

@@ -11,7 +11,7 @@
 
 const NSInteger     JHActionButtonWidth = 58;
 
-const NSInteger     JHActionButtonTextFontSize = 14;
+const NSInteger     JHTextActionButtonTextFontSize = 14;
 
 const BOOL          JHActionMoreButtonShow = YES;
 

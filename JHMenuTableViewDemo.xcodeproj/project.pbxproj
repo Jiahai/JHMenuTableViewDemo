@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B6CF2791B5540A50085698B /* jhmenu_checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B6CF2771B5540A50085698B /* jhmenu_checked@2x.png */; };
+		9B6CF27A1B5540A50085698B /* jhmenu_unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B6CF2781B5540A50085698B /* jhmenu_unchecked@2x.png */; };
+		9B935AE11B5341050098ACD9 /* JHMenuTextAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B935AE01B5341050098ACD9 /* JHMenuTextAction.m */; };
+		9B935AE41B5341290098ACD9 /* JHMenuImageAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B935AE31B5341290098ACD9 /* JHMenuImageAction.m */; };
+		9B935AE71B5343C70098ACD9 /* JHMenuActionLeftView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B935AE61B5343C70098ACD9 /* JHMenuActionLeftView.m */; };
+		9B935AEA1B53602B0098ACD9 /* JHMenuActionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B935AE91B53602B0098ACD9 /* JHMenuActionView.m */; };
 		9BC7A6C51AE637C7005C945B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC7A6C41AE637C7005C945B /* main.m */; };
 		9BC7A6C81AE637C7005C945B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC7A6C71AE637C7005C945B /* AppDelegate.m */; };
 		9BC7A6CB1AE637C7005C945B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC7A6CA1AE637C7005C945B /* ViewController.m */; };
@@ -15,7 +21,7 @@
 		9BC7A6D31AE637C7005C945B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BC7A6D11AE637C7005C945B /* LaunchScreen.xib */; };
 		9BC7A6DF1AE637C7005C945B /* JHMenuTableViewDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC7A6DE1AE637C7005C945B /* JHMenuTableViewDemoTests.m */; };
 		9BC7A6F51AE639B5005C945B /* JHMenuAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC7A6EA1AE639B5005C945B /* JHMenuAction.m */; };
-		9BC7A6F61AE639B5005C945B /* JHMenuActionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC7A6EC1AE639B5005C945B /* JHMenuActionView.m */; };
+		9BC7A6F61AE639B5005C945B /* JHMenuActionRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC7A6EC1AE639B5005C945B /* JHMenuActionRightView.m */; };
 		9BC7A6F71AE639B5005C945B /* JHMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC7A6EE1AE639B5005C945B /* JHMenuTableViewCell.m */; };
 		9BC7A6F81AE639B5005C945B /* JHMicro.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC7A6F01AE639B5005C945B /* JHMicro.m */; };
 		9BC7A6F91AE639B5005C945B /* UITableView+JHMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC7A6F21AE639B5005C945B /* UITableView+JHMenu.m */; };
@@ -34,6 +40,16 @@
 
 /* Begin PBXFileReference section */
 		9B4604F61AFC446A00CA9E65 /* JHMenuTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JHMenuTableView.h; sourceTree = "<group>"; };
+		9B6CF2771B5540A50085698B /* jhmenu_checked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jhmenu_checked@2x.png"; sourceTree = "<group>"; };
+		9B6CF2781B5540A50085698B /* jhmenu_unchecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jhmenu_unchecked@2x.png"; sourceTree = "<group>"; };
+		9B935ADF1B5341050098ACD9 /* JHMenuTextAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHMenuTextAction.h; sourceTree = "<group>"; };
+		9B935AE01B5341050098ACD9 /* JHMenuTextAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHMenuTextAction.m; sourceTree = "<group>"; };
+		9B935AE21B5341290098ACD9 /* JHMenuImageAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHMenuImageAction.h; sourceTree = "<group>"; };
+		9B935AE31B5341290098ACD9 /* JHMenuImageAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHMenuImageAction.m; sourceTree = "<group>"; };
+		9B935AE51B5343C70098ACD9 /* JHMenuActionLeftView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHMenuActionLeftView.h; sourceTree = "<group>"; };
+		9B935AE61B5343C70098ACD9 /* JHMenuActionLeftView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHMenuActionLeftView.m; sourceTree = "<group>"; };
+		9B935AE81B53602B0098ACD9 /* JHMenuActionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHMenuActionView.h; sourceTree = "<group>"; };
+		9B935AE91B53602B0098ACD9 /* JHMenuActionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHMenuActionView.m; sourceTree = "<group>"; };
 		9BC7A6BF1AE637C7005C945B /* JHMenuTableViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JHMenuTableViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BC7A6C31AE637C7005C945B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9BC7A6C41AE637C7005C945B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -49,8 +65,8 @@
 		9BC7A6DE1AE637C7005C945B /* JHMenuTableViewDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JHMenuTableViewDemoTests.m; sourceTree = "<group>"; };
 		9BC7A6E91AE639B5005C945B /* JHMenuAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHMenuAction.h; sourceTree = "<group>"; };
 		9BC7A6EA1AE639B5005C945B /* JHMenuAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHMenuAction.m; sourceTree = "<group>"; };
-		9BC7A6EB1AE639B5005C945B /* JHMenuActionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHMenuActionView.h; sourceTree = "<group>"; };
-		9BC7A6EC1AE639B5005C945B /* JHMenuActionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHMenuActionView.m; sourceTree = "<group>"; };
+		9BC7A6EB1AE639B5005C945B /* JHMenuActionRightView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHMenuActionRightView.h; sourceTree = "<group>"; };
+		9BC7A6EC1AE639B5005C945B /* JHMenuActionRightView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHMenuActionRightView.m; sourceTree = "<group>"; };
 		9BC7A6ED1AE639B5005C945B /* JHMenuTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHMenuTableViewCell.h; sourceTree = "<group>"; };
 		9BC7A6EE1AE639B5005C945B /* JHMenuTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHMenuTableViewCell.m; sourceTree = "<group>"; };
 		9BC7A6EF1AE639B5005C945B /* JHMicro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHMicro.h; sourceTree = "<group>"; };
@@ -79,6 +95,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9B6CF2751B5540A50085698B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9B6CF2761B5540A50085698B /* Images */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		9B6CF2761B5540A50085698B /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				9B6CF2771B5540A50085698B /* jhmenu_checked@2x.png */,
+				9B6CF2781B5540A50085698B /* jhmenu_unchecked@2x.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		9BC7A6B61AE637C7005C945B = {
 			isa = PBXGroup;
 			children = (
@@ -142,11 +175,20 @@
 		9BC7A6E81AE639B5005C945B /* JHMenuTableView */ = {
 			isa = PBXGroup;
 			children = (
+				9B6CF2751B5540A50085698B /* Resources */,
 				9B4604F61AFC446A00CA9E65 /* JHMenuTableView.h */,
 				9BC7A6E91AE639B5005C945B /* JHMenuAction.h */,
 				9BC7A6EA1AE639B5005C945B /* JHMenuAction.m */,
-				9BC7A6EB1AE639B5005C945B /* JHMenuActionView.h */,
-				9BC7A6EC1AE639B5005C945B /* JHMenuActionView.m */,
+				9B935ADF1B5341050098ACD9 /* JHMenuTextAction.h */,
+				9B935AE01B5341050098ACD9 /* JHMenuTextAction.m */,
+				9B935AE21B5341290098ACD9 /* JHMenuImageAction.h */,
+				9B935AE31B5341290098ACD9 /* JHMenuImageAction.m */,
+				9B935AE81B53602B0098ACD9 /* JHMenuActionView.h */,
+				9B935AE91B53602B0098ACD9 /* JHMenuActionView.m */,
+				9B935AE51B5343C70098ACD9 /* JHMenuActionLeftView.h */,
+				9B935AE61B5343C70098ACD9 /* JHMenuActionLeftView.m */,
+				9BC7A6EB1AE639B5005C945B /* JHMenuActionRightView.h */,
+				9BC7A6EC1AE639B5005C945B /* JHMenuActionRightView.m */,
 				9BC7A6ED1AE639B5005C945B /* JHMenuTableViewCell.h */,
 				9BC7A6EE1AE639B5005C945B /* JHMenuTableViewCell.m */,
 				9BC7A6EF1AE639B5005C945B /* JHMicro.h */,
@@ -242,6 +284,8 @@
 				9BC7A6CE1AE637C7005C945B /* Main.storyboard in Resources */,
 				9BC7A6D31AE637C7005C945B /* LaunchScreen.xib in Resources */,
 				9BC7A6D01AE637C7005C945B /* Images.xcassets in Resources */,
+				9B6CF27A1B5540A50085698B /* jhmenu_unchecked@2x.png in Resources */,
+				9B6CF2791B5540A50085698B /* jhmenu_checked@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,15 +303,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B935AE71B5343C70098ACD9 /* JHMenuActionLeftView.m in Sources */,
 				9BC7A6CB1AE637C7005C945B /* ViewController.m in Sources */,
+				9B935AE41B5341290098ACD9 /* JHMenuImageAction.m in Sources */,
+				9B935AE11B5341050098ACD9 /* JHMenuTextAction.m in Sources */,
 				9BC7A6C81AE637C7005C945B /* AppDelegate.m in Sources */,
 				9BC7A6F91AE639B5005C945B /* UITableView+JHMenu.m in Sources */,
 				9BC7A6F81AE639B5005C945B /* JHMicro.m in Sources */,
 				9BC7A6F71AE639B5005C945B /* JHMenuTableViewCell.m in Sources */,
+				9B935AEA1B53602B0098ACD9 /* JHMenuActionView.m in Sources */,
 				9BC7A6F51AE639B5005C945B /* JHMenuAction.m in Sources */,
 				9BC7A6FA1AE639B5005C945B /* UIView+JHExtension.m in Sources */,
 				9BC7A6C51AE637C7005C945B /* main.m in Sources */,
-				9BC7A6F61AE639B5005C945B /* JHMenuActionView.m in Sources */,
+				9BC7A6F61AE639B5005C945B /* JHMenuActionRightView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
