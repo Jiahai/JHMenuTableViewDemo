@@ -12,13 +12,22 @@
 #import "objc/runtime.h"
 
 @interface UITableView ()
-@property (nonatomic, weak)     JHMenuTableViewCell            *currentMenuTableCell;
+@property (nonatomic, weak)     JHMenuTableViewCell             *currentMenuTableCell;
 @property (nonatomic, strong)   UIPanGestureRecognizer          *panGestureRecognizer;
 @end
 
 @implementation UITableView (JHMenu)
 
 #pragma mark - 关联属性
+- (void)setJhMenuDelegate:(id<JHMenuTableViewDelegate>)jhMenuDelegate
+{
+    objc_setAssociatedObject(self, @selector(jhMenuDelegate), jhMenuDelegate, OBJC_ASSOCIATION_ASSIGN);
+}
+
+- (id<JHMenuTableViewDelegate>)jhMenuDelegate
+{
+    return objc_getAssociatedObject(self, @selector(jhMenuDelegate));
+}
 - (void)setCurrentMenuTableCell:(JHMenuTableViewCell *)currentMenuTableCell
 {
     [self willChangeValueForKey:@"currentMenuTableCell"];
@@ -81,16 +90,32 @@
             self.currentMenuTableCell = (JHMenuTableViewCell *)[self cellForRowAtIndexPath:indexPath];
             
             [self.currentMenuTableCell swipeBeganWithDeltaX:deltaX];
+            
+            if([self.jhMenuDelegate respondsToSelector:@selector(jhMenuTableViewSwipeBegan:)])
+            {
+                [self.jhMenuDelegate jhMenuTableViewSwipeBegan:self];
+            }
         }
             break;
         case UIGestureRecognizerStateChanged:
         {
             self.currentMenuTableCell.deltaX = deltaX;
+            
+            if([self.jhMenuDelegate respondsToSelector:@selector(jhMenuTableViewSwipePrecentChanged:currentJHMenuTableViewCell:)])
+            {
+                [self.jhMenuDelegate jhMenuTableViewSwipePrecentChanged:self currentJHMenuTableViewCell:self.currentMenuTableCell];
+            }
+
         }
             break;
         case UIGestureRecognizerStateEnded:
         {
-            [self.currentMenuTableCell swipeEndWithDeltaX:deltaX];
+            [self.currentMenuTableCell swipeEndedWithDeltaX:deltaX];
+            
+            if([self.jhMenuDelegate respondsToSelector:@selector(jhMenuTableViewSwipeEnded:)])
+            {
+                [self.jhMenuDelegate jhMenuTableViewSwipeEnded:self];
+            }
         }
             break;
         default:

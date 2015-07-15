@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JHMenuTableView.h"
 
-@interface ViewController : UIViewController <UITableViewDataSource,UITableViewDelegate>
+@interface ViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,JHMenuTableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 

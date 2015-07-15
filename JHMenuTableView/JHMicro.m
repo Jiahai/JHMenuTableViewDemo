@@ -21,4 +21,4 @@ const float         JHMenuExpandAnimationDuration = 0.3;
 
 const BOOL          kJHMenuMoveAllLeftCells = YES;
 
-const BOOL          kJHMenuMoveAllRightCells = YES;
+const BOOL          kJHMenuMoveAllRightCells = NO;

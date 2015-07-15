@@ -55,7 +55,8 @@
 
 - (void)prepareForReuse
 {
-    self.menuState = JHMenuTableViewCellState_Common;
+    if(!(_menuState == JHMenuTableViewCellState_All_ToggledLeft || _menuState == JHMenuTableViewCellState_All_ToggledRight))
+        self.menuState = JHMenuTableViewCellState_Common;
 }
 
 - (void)layoutSubviews
@@ -68,6 +69,20 @@
     
     NSAssert(self.leftActionsView.jh_width+self.rightActionsView.jh_width<self.customView.jh_width, @"左菜单和右菜单会出现重合，请合理设置菜单Actions！");
 }
+
+#pragma mark - 
+
+- (CGFloat)leftPrecent
+{
+    return self.customView.jh_originX/self.leftActionsView.jh_width;
+}
+
+- (CGFloat)rightPrecent
+{
+    return ABS(self.customView.jh_originX)/self.rightActionsView.jh_width;
+}
+
+#pragma mark -
 
 - (void)setLeftActions:(NSArray *)leftActions
 {
@@ -105,19 +120,16 @@
                 case JHMenuActionViewState_Common:
                 {
                     toRect.origin.x = 0;
-//                    [_leftActionsView setMoreButtonHidden:NO];
                 }
                     break;
                 case JHMenuActionViewState_Division:
                 {
                     toRect.origin.x = _leftActionsView.moreBtn.jh_originX + _leftActionsView.moreBtn.jh_width;
-//                    [_leftActionsView setMoreButtonHidden:NO];
                 }
                     break;
                 case JHMenuActionViewState_Expanded:
                 {
                     toRect.origin.x = _leftActionsView.jh_width;
-//                    [_leftActionsView setMoreButtonHidden:YES];
                 }
                     break;
             }
@@ -130,19 +142,16 @@
                 case JHMenuActionViewState_Common:
                 {
                     toRect.origin.x = 0;
-//                    [_rightActionsView setMoreButtonHidden:NO];
                 }
                     break;
                 case JHMenuActionViewState_Division:
                 {
                     toRect.origin.x = _rightActionsView.divisionOriginX;
-//                    [_rightActionsView setMoreButtonHidden:NO];
                 }
                     break;
                 case JHMenuActionViewState_Expanded:
                 {
                     toRect.origin.x = -_rightActionsView.jh_width;
-//                    [_rightActionsView setMoreButtonHidden:YES];
                 }
                     break;
             }
@@ -277,7 +286,7 @@
     }
 }
 
-- (void)swipeEndWithDeltaX:(CGFloat)deltaX
+- (void)swipeEndedWithDeltaX:(CGFloat)deltaX
 {
     switch (_menuState) {
         case JHMenuTableViewCellState_TogglingLeft:

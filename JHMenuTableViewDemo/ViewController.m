@@ -7,12 +7,12 @@
 //
 
 #import "ViewController.h"
-#import "JHMenuTableView.h"
 
 @interface ViewController ()
 @property (nonatomic, strong)           NSArray     *actions;
 @property (nonatomic, strong)           NSArray     *actions1;
 @property (nonatomic, strong)           NSArray     *iActions;
+@property (nonatomic, strong)           NSMutableArray  *selectedArray;
 @end
 
 @implementation ViewController
@@ -22,6 +22,10 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     [_tableView openJHTableViewMenu];
+    
+    _tableView.jhMenuDelegate = self;
+    
+    self.selectedArray = [NSMutableArray array];
     
     JHMenuTextAction *action = [[JHMenuTextAction alloc] init];
     action.title = @"标为\n已读";
@@ -62,7 +66,14 @@
     iAction.image_normal = @"jhmenu_unchecked.png";
     iAction.image_selected = @"jhmenu_checked.png";
     iAction.actionBlock = ^(JHMenuTableViewCell *cell, NSIndexPath *indexPath){
-
+        if([self.selectedArray containsObject:indexPath])
+        {
+            [self.selectedArray removeObject:indexPath];
+        }
+        else
+        {
+            [self.selectedArray addObject:indexPath];
+        }
         JHLog(@"选中:%@,row:%d",cell,indexPath.row);
     };
     self.iActions = @[iAction];
@@ -108,6 +119,10 @@
         cell.rightActions = self.actions;
     }
     
+    JHMenuImageAction *imageAction = [self.iActions objectAtIndex:0];
+    imageAction.selected = [self.selectedArray containsObject:indexPath];
+    
+    cell.leftActions = self.iActions;
     
     
     UILabel *label = (UILabel *)[cell.customView viewWithTag:88];
@@ -115,6 +130,22 @@
     label.text = [NSString stringWithFormat:@"%d",indexPath.row];
     return cell;
 }
+
+#pragma mark - JHMenuTableViewDelegate
+
+- (void)jhMenuTableViewSwipeBegan:(UITableView *)tableView
+{
+    NSLog(@"Swipe Began");
+}
+- (void)jhMenuTableViewSwipePrecentChanged:(UITableView *)tableView currentJHMenuTableViewCell:(JHMenuTableViewCell *)cell
+{
+    NSLog(@"Swipe Precent:%.2f   right:%.2f",cell.leftPrecent,cell.rightPrecent);
+}
+- (void)jhMenuTableViewSwipeEnded:(UITableView *)tableView
+{
+    NSLog(@"Swipe Ended");
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

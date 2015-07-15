@@ -7,9 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+@class JHMenuTableViewCell;
 
+@protocol JHMenuTableViewDelegate <NSObject>
+
+- (void)jhMenuTableViewSwipeBegan:(UITableView *)tableView;
+- (void)jhMenuTableViewSwipePrecentChanged:(UITableView *)tableView currentJHMenuTableViewCell:(JHMenuTableViewCell *)cell;
+- (void)jhMenuTableViewSwipeEnded:(UITableView *)tableView;
+
+@end
 
 @interface UITableView (JHMenu) <UIGestureRecognizerDelegate>
+
+@property (nonatomic, assign)       id<JHMenuTableViewDelegate>     jhMenuDelegate;
 
 - (void)openJHTableViewMenu;
 

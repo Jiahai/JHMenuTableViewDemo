@@ -139,8 +139,7 @@
         JHMenuImageAction *imageAction = (JHMenuImageAction *)action;
         if(imageAction.checkboxModel)
         {
-            imageAction.selected = !imageAction.selected;
-            if(imageAction.selected)
+            if(!imageAction.selected)
             {
                 [actionBtn setImage:[UIImage imageNamed:imageAction.image_selected] forState:UIControlStateNormal];
                 [actionBtn setImage:[UIImage imageNamed:imageAction.image_normal] forState:UIControlStateSelected];

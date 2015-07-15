@@ -17,7 +17,7 @@ typedef NS_ENUM(NSInteger, JHMenuTableViewCellState){
     /**
      *  正常状态
      */
-    JHMenuTableViewCellState_Common         = 0,
+    JHMenuTableViewCellState_Common             = 0,
     /**
      *  正在拨动，显示LeftActionView
      */
@@ -34,10 +34,21 @@ typedef NS_ENUM(NSInteger, JHMenuTableViewCellState){
      *  RightActionView展示状态
      */
     JHMenuTableViewCellState_ToggledRight,
-    
+    /**
+     *  正在拨动全部Cell，显示LeftActionView
+     */
     JHMenuTableViewCellState_All_TogglingLeft,
+    /**
+     *  全部Cell，LeftActionView展示状态
+     */
     JHMenuTableViewCellState_All_ToggledLeft,
+    /**
+     *  正在拨动全部Cell，显示RightActionView
+     */
     JHMenuTableViewCellState_All_TogglingRight,
+    /**
+     *  全部Cell，RightActionView展示状态
+     */
     JHMenuTableViewCellState_All_ToggledRight
 };
 
@@ -54,11 +65,13 @@ typedef NS_ENUM(NSInteger, JHMenuTableViewCellState){
 @property (nonatomic, strong)   NSArray                     *rightActions;
 @property (nonatomic, strong)   JHMenuActionRightView       *rightActionsView;
 
-
-
 @property (nonatomic, assign)   CGFloat                     deltaX;
+
+@property (nonatomic, readonly, getter=leftPrecent) CGFloat leftPrecent;
+@property (nonatomic, readonly, getter=rightPrecent)CGFloat rightPrecent;
+
 
 - (void)swipeBeganWithDeltaX:(CGFloat)deltaX;
 
-- (void)swipeEndWithDeltaX:(CGFloat)deltaX;
+- (void)swipeEndedWithDeltaX:(CGFloat)deltaX;
 @end
