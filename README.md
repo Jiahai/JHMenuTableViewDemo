@@ -1,7 +1,12 @@
 JHMenuTableViewDemo
 ====
-仿网易邮箱列表侧滑菜单
+UITableview左右侧滑菜单
 ----
+
+#V1.1版本新增功能
+*加入左侧侧滑菜单功能
+*增加左/右菜单整体侧滑功能
+*增加Delegate回调
 
 #目录
 * [如何导入？](#import)
