@@ -47,3 +47,15 @@ extern const NSInteger      JHActionMoreButtonIndex;
  *  Menu展开/收缩的动画持续时间，单位为秒
  */
 extern const float          JHMenuExpandAnimationDuration;
+
+/**
+ *  <#Description#>
+ */
+extern const BOOL           kJHMenuMoveAllLeftCells;
+
+extern const BOOL           kJHMenuMoveAllRightCells;
+
+
+#define JHNOTIFICATION_MoveAllCells_Began       @"JHNOTIFICATION_MoveAllCells_Began"
+#define JHNOTIFICATION_MoveAllCells_Changed     @"JHNOTIFICATION_MoveAllCells_Changed"
+#define JHNOTIFICATION_MoveAllCells_Ended       @"JHNOTIFICATION_MoveAllCells_Ended"

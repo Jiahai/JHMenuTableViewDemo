@@ -33,7 +33,12 @@ typedef NS_ENUM(NSInteger, JHMenuTableViewCellState){
     /**
      *  RightActionView展示状态
      */
-    JHMenuTableViewCellState_ToggledRight
+    JHMenuTableViewCellState_ToggledRight,
+    
+    JHMenuTableViewCellState_All_TogglingLeft,
+    JHMenuTableViewCellState_All_ToggledLeft,
+    JHMenuTableViewCellState_All_TogglingRight,
+    JHMenuTableViewCellState_All_ToggledRight
 };
 
 

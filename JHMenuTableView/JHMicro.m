@@ -18,3 +18,7 @@ const BOOL          JHActionMoreButtonShow = YES;
 const NSInteger     JHActionMoreButtonIndex = 2;
 
 const float         JHMenuExpandAnimationDuration = 0.3;
+
+const BOOL          kJHMenuMoveAllLeftCells = YES;
+
+const BOOL          kJHMenuMoveAllRightCells = YES;

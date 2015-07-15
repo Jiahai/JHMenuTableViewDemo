@@ -42,6 +42,13 @@
         self.customView = [[UIView alloc] initWithFrame:self.bounds];
         self.customView.backgroundColor = [UIColor whiteColor];
         [self addSubview:_customView];
+        
+        if(kJHMenuMoveAllLeftCells || kJHMenuMoveAllRightCells)
+        {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotificationMoveAllCellsBegan:) name:JHNOTIFICATION_MoveAllCells_Began object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotificationMoveAllCellsChanged:) name:JHNOTIFICATION_MoveAllCells_Changed object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotificationMoveAllCellsEnded:) name:JHNOTIFICATION_MoveAllCells_Ended object:nil];
+        }
     }
     return self;
 }
@@ -92,6 +99,7 @@
         }
             break;
         case JHMenuTableViewCellState_ToggledLeft:
+        case JHMenuTableViewCellState_All_ToggledLeft:
         {
             switch (_leftActionsView.state) {
                 case JHMenuActionViewState_Common:
@@ -116,6 +124,7 @@
         }
             break;
         case JHMenuTableViewCellState_ToggledRight:
+        case JHMenuTableViewCellState_All_ToggledRight:
         {
             switch (_rightActionsView.state) {
                 case JHMenuActionViewState_Common:
@@ -151,65 +160,27 @@
 
 - (void)setDeltaX:(CGFloat)deltaX
 {
-    CGFloat originX = self.startOriginX + deltaX;
-    
     switch (self.menuState) {
         case JHMenuTableViewCellState_TogglingLeft:
         {
-            if(self.leftActionsView.state == JHMenuActionViewState_Division)
-            {
-                //分段显示时，移动customView处理"更多"按钮的动画
-                if(deltaX > 0)
-                    self.leftActionsView.moreBtn.alpha = 1 - MIN(1, ABS(deltaX)/JHMenuTriggerDistance);
-            }
-            
-            if(originX < 0)
-                originX = 0;
-            
-            /**
-             *  x坐标的右极限
-             */
-            CGFloat originX_R = _leftActionsView.jh_width;
-            if(_leftActionsView.canDivision && _leftActionsView.state == JHMenuActionViewState_Common)
-            {
-                originX_R = _leftActionsView.moreBtn.jh_originX + _leftActionsView.moreBtn.jh_width;
-            }
-            
-            if(originX > originX_R)
-                originX = originX_R;
+            [self swipeToMoveLeftActionViewWithDeltaX:deltaX];
         }
             break;
         case JHMenuTableViewCellState_TogglingRight:
         {
-            if(self.rightActionsView.state == JHMenuActionViewState_Division)
-            {
-                //分段显示时，移动customView处理"更多"按钮的动画
-                if(deltaX < 0)
-                    self.rightActionsView.moreBtn.alpha = 1 - MIN(1, ABS(deltaX)/JHMenuTriggerDistance);
-            }
-            
-            if(originX > 0)
-                originX = 0;
-            
-            /**
-             *  x坐标的左极限
-             */
-            CGFloat originX_L = -_rightActionsView.jh_width;
-            if(_rightActionsView.canDivision && _rightActionsView.state == JHMenuActionViewState_Common)
-            {
-                originX_L = -(_rightActionsView.jh_width-_rightActionsView.moreBtn.jh_originX);
-            }
-            
-            if(originX < originX_L)
-                originX = originX_L;
-
+            [self swipeToMoveRightActionViewWithDeltaX:deltaX];
+        }
+            break;
+        case JHMenuTableViewCellState_All_TogglingLeft:
+        case JHMenuTableViewCellState_All_TogglingRight:
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:JHNOTIFICATION_MoveAllCells_Changed object:nil userInfo:@{@"deltaX":@(deltaX)}];
         }
             break;
         default:
             break;
     }
 
-    self.customView.jh_originX = originX;
 }
 
 - (void)swipeBeganWithDeltaX:(CGFloat)deltaX
@@ -220,6 +191,18 @@
     {
         switch (_menuState) {
             case JHMenuTableViewCellState_Common:
+            {
+                if(kJHMenuMoveAllLeftCells)
+                {
+                    self.menuState = JHMenuTableViewCellState_All_TogglingLeft;
+                    [[NSNotificationCenter defaultCenter] postNotificationName:JHNOTIFICATION_MoveAllCells_Began object:nil userInfo:@{@"deltaX":@(deltaX)}];
+                }
+                else
+                {
+                    self.menuState = JHMenuTableViewCellState_TogglingLeft;
+                }
+            }
+                break;
             case JHMenuTableViewCellState_ToggledLeft:
             {
                 self.menuState = JHMenuTableViewCellState_TogglingLeft;
@@ -228,6 +211,20 @@
             case JHMenuTableViewCellState_ToggledRight:
             {
                 self.menuState = JHMenuTableViewCellState_TogglingRight;
+            }
+                break;
+                
+            case JHMenuTableViewCellState_All_ToggledLeft:
+            {
+                self.menuState = JHMenuTableViewCellState_All_TogglingLeft;
+                [[NSNotificationCenter defaultCenter] postNotificationName:JHNOTIFICATION_MoveAllCells_Began object:nil userInfo:@{@"deltaX":@(deltaX)}];
+            }
+                break;
+                
+            case JHMenuTableViewCellState_All_ToggledRight:
+            {
+                self.menuState = JHMenuTableViewCellState_All_TogglingRight;
+                [[NSNotificationCenter defaultCenter] postNotificationName:JHNOTIFICATION_MoveAllCells_Began object:nil userInfo:@{@"deltaX":@(deltaX)}];
             }
                 break;
             default:
@@ -238,14 +235,40 @@
     {
         switch (_menuState) {
             case JHMenuTableViewCellState_Common:
-            case JHMenuTableViewCellState_ToggledRight:
             {
-                self.menuState = JHMenuTableViewCellState_TogglingRight;
+                if(kJHMenuMoveAllRightCells)
+                {
+                    self.menuState = JHMenuTableViewCellState_All_TogglingRight;
+                    [[NSNotificationCenter defaultCenter] postNotificationName:JHNOTIFICATION_MoveAllCells_Began object:nil userInfo:@{@"deltaX":@(deltaX)}];
+                }
+                else
+                {
+                    self.menuState = JHMenuTableViewCellState_TogglingRight;
+                }
             }
                 break;
             case JHMenuTableViewCellState_ToggledLeft:
             {
                 self.menuState = JHMenuTableViewCellState_TogglingLeft;
+            }
+                break;
+            case JHMenuTableViewCellState_ToggledRight:
+            {
+                self.menuState = JHMenuTableViewCellState_TogglingRight;
+            }
+                break;
+                
+            case JHMenuTableViewCellState_All_ToggledLeft:
+            {
+                self.menuState = JHMenuTableViewCellState_All_TogglingLeft;
+                [[NSNotificationCenter defaultCenter] postNotificationName:JHNOTIFICATION_MoveAllCells_Began object:nil userInfo:@{@"deltaX":@(deltaX)}];
+            }
+                break;
+                
+            case JHMenuTableViewCellState_All_ToggledRight:
+            {
+                self.menuState = JHMenuTableViewCellState_All_TogglingRight;
+                [[NSNotificationCenter defaultCenter] postNotificationName:JHNOTIFICATION_MoveAllCells_Began object:nil userInfo:@{@"deltaX":@(deltaX)}];
             }
                 break;
             default:
@@ -259,98 +282,18 @@
     switch (_menuState) {
         case JHMenuTableViewCellState_TogglingLeft:
         {
-            switch (_leftActionsView.state) {
-                case JHMenuActionViewState_Common:
-                {
-                    if(deltaX > JHMenuTriggerDistance)
-                    {
-                        _leftActionsView.state = _leftActionsView.canDivision ? JHMenuActionViewState_Division : JHMenuActionViewState_Expanded;
-                    }
-                    else
-                    {
-                        _leftActionsView.state = JHMenuActionViewState_Common;
-                    }
-                }
-                    break;
-                case JHMenuActionViewState_Division:
-                {
-                    if(deltaX < -JHMenuTriggerDistance)
-                    {
-                        _leftActionsView.state = JHMenuActionViewState_Common;
-                    }
-                    else if(deltaX > JHMenuTriggerDistance)
-                    {
-                        _leftActionsView.state = JHMenuActionViewState_Expanded;
-                    }
-                    else
-                    {
-                        _leftActionsView.state = JHMenuActionViewState_Division;
-                    }
-                }
-                    break;
-                case JHMenuActionViewState_Expanded:
-                {
-                    if(deltaX < -JHMenuTriggerDistance)
-                    {
-                        _leftActionsView.state = JHMenuActionViewState_Common;
-                    }
-                    else
-                    {
-                        _leftActionsView.state = JHMenuActionViewState_Expanded;
-                    }
-                }
-                    break;
-            }
-            
-            [self changeMenuStateWithActionView:_leftActionsView];
+            [self swipeEndLeftActionViewWithDeltaX:deltaX];
         }
             break;
         case JHMenuTableViewCellState_TogglingRight:
         {
-            switch (_rightActionsView.state) {
-                case JHMenuActionViewState_Common:
-                {
-                    if(deltaX < -JHMenuTriggerDistance)
-                    {
-                        _rightActionsView.state = _rightActionsView.canDivision ? JHMenuActionViewState_Division : JHMenuActionViewState_Expanded;
-                    }
-                    else
-                    {
-                        _rightActionsView.state = JHMenuActionViewState_Common;
-                    }
-                }
-                    break;
-                case JHMenuActionViewState_Division:
-                {
-                    if(deltaX < -JHMenuTriggerDistance)
-                    {
-                        _rightActionsView.state = JHMenuActionViewState_Expanded;
-                    }
-                    else if(deltaX > JHMenuTriggerDistance)
-                    {
-                        _rightActionsView.state = JHMenuActionViewState_Common;
-                    }
-                    else
-                    {
-                        _rightActionsView.state = JHMenuActionViewState_Division;
-                    }
-                }
-                    break;
-                case JHMenuActionViewState_Expanded:
-                {
-                    if(deltaX > JHMenuTriggerDistance)
-                    {
-                        _rightActionsView.state = JHMenuActionViewState_Common;
-                    }
-                    else
-                    {
-                        _rightActionsView.state = JHMenuActionViewState_Expanded;
-                    }
-                }
-                    break;
-            }
-            
-            [self changeMenuStateWithActionView:_rightActionsView];
+            [self swipeEndRightActionViewWithDeltaX:deltaX];
+        }
+            break;
+        case JHMenuTableViewCellState_All_TogglingLeft:
+        case JHMenuTableViewCellState_All_TogglingRight:
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:JHNOTIFICATION_MoveAllCells_Ended object:nil userInfo:@{@"deltaX":@(deltaX)}];
         }
             break;
         default:
@@ -369,7 +312,16 @@
             }
                 break;
             default:
-                self.menuState = JHMenuTableViewCellState_ToggledLeft;
+            {
+                if(_menuState == JHMenuTableViewCellState_All_TogglingLeft)
+                {
+                    self.menuState = JHMenuTableViewCellState_All_ToggledLeft;
+                }
+                else
+                {
+                    self.menuState = JHMenuTableViewCellState_ToggledLeft;
+                }
+            }
                 break;
         }
     }
@@ -383,12 +335,219 @@
             }
                 break;
             default:
-                self.menuState = JHMenuTableViewCellState_ToggledRight;
+            {
+                if(_menuState == JHMenuTableViewCellState_All_TogglingRight)
+                {
+                    self.menuState = JHMenuTableViewCellState_All_ToggledRight;
+                }
+                else
+                {
+                    self.menuState = JHMenuTableViewCellState_ToggledRight;
+                }
+            }
                 break;
         }
     }
 }
 
+#pragma mark -
+
+- (void)swipeToMoveLeftActionViewWithDeltaX:(CGFloat)deltaX
+{
+    CGFloat originX = self.startOriginX + deltaX;
+    
+    if(self.leftActionsView.state == JHMenuActionViewState_Division)
+    {
+        //分段显示时，移动customView处理"更多"按钮的动画
+        if(deltaX > 0)
+            self.leftActionsView.moreBtn.alpha = 1 - MIN(1, ABS(deltaX)/JHMenuTriggerDistance);
+    }
+    
+    if(originX < 0)
+        originX = 0;
+    
+    /**
+     *  x坐标的右极限
+     */
+    CGFloat originX_R = _leftActionsView.jh_width;
+    if(_leftActionsView.canDivision && _leftActionsView.state == JHMenuActionViewState_Common)
+    {
+        originX_R = _leftActionsView.moreBtn.jh_originX + _leftActionsView.moreBtn.jh_width;
+    }
+    
+    if(originX > originX_R)
+        originX = originX_R;
+    
+    
+    self.customView.jh_originX = originX;
+}
+
+- (void)swipeToMoveRightActionViewWithDeltaX:(CGFloat)deltaX
+{
+    CGFloat originX = self.startOriginX + deltaX;
+                
+    if(self.rightActionsView.state == JHMenuActionViewState_Division)
+    {
+        //分段显示时，移动customView处理"更多"按钮的动画
+        if(deltaX < 0)
+            self.rightActionsView.moreBtn.alpha = 1 - MIN(1, ABS(deltaX)/JHMenuTriggerDistance);
+    }
+    
+    if(originX > 0)
+        originX = 0;
+    
+    /**
+     *  x坐标的左极限
+     */
+    CGFloat originX_L = -_rightActionsView.jh_width;
+    if(_rightActionsView.canDivision && _rightActionsView.state == JHMenuActionViewState_Common)
+    {
+        originX_L = -(_rightActionsView.jh_width-_rightActionsView.moreBtn.jh_originX);
+    }
+    
+    if(originX < originX_L)
+        originX = originX_L;
+                
+    self.customView.jh_originX = originX;
+}
+
+- (void)swipeEndLeftActionViewWithDeltaX:(CGFloat)deltaX
+{
+    switch (_leftActionsView.state) {
+        case JHMenuActionViewState_Common:
+        {
+            if(deltaX > JHMenuTriggerDistance)
+            {
+                _leftActionsView.state = _leftActionsView.canDivision ? JHMenuActionViewState_Division : JHMenuActionViewState_Expanded;
+            }
+            else
+            {
+                _leftActionsView.state = JHMenuActionViewState_Common;
+            }
+        }
+            break;
+        case JHMenuActionViewState_Division:
+        {
+            if(deltaX < -JHMenuTriggerDistance)
+            {
+                _leftActionsView.state = JHMenuActionViewState_Common;
+            }
+            else if(deltaX > JHMenuTriggerDistance)
+            {
+                _leftActionsView.state = JHMenuActionViewState_Expanded;
+            }
+            else
+            {
+                _leftActionsView.state = JHMenuActionViewState_Division;
+            }
+        }
+            break;
+        case JHMenuActionViewState_Expanded:
+        {
+            if(deltaX < -JHMenuTriggerDistance)
+            {
+                _leftActionsView.state = JHMenuActionViewState_Common;
+            }
+            else
+            {
+                _leftActionsView.state = JHMenuActionViewState_Expanded;
+            }
+        }
+            break;
+    }
+    
+    [self changeMenuStateWithActionView:_leftActionsView];
+}
+
+- (void)swipeEndRightActionViewWithDeltaX:(CGFloat)deltaX
+{
+    switch (_rightActionsView.state) {
+        case JHMenuActionViewState_Common:
+        {
+            if(deltaX < -JHMenuTriggerDistance)
+            {
+                _rightActionsView.state = _rightActionsView.canDivision ? JHMenuActionViewState_Division : JHMenuActionViewState_Expanded;
+            }
+            else
+            {
+                _rightActionsView.state = JHMenuActionViewState_Common;
+            }
+        }
+            break;
+        case JHMenuActionViewState_Division:
+        {
+            if(deltaX < -JHMenuTriggerDistance)
+            {
+                _rightActionsView.state = JHMenuActionViewState_Expanded;
+            }
+            else if(deltaX > JHMenuTriggerDistance)
+            {
+                _rightActionsView.state = JHMenuActionViewState_Common;
+            }
+            else
+            {
+                _rightActionsView.state = JHMenuActionViewState_Division;
+            }
+        }
+            break;
+        case JHMenuActionViewState_Expanded:
+        {
+            if(deltaX > JHMenuTriggerDistance)
+            {
+                _rightActionsView.state = JHMenuActionViewState_Common;
+            }
+            else
+            {
+                _rightActionsView.state = JHMenuActionViewState_Expanded;
+            }
+        }
+            break;
+    }
+    
+    [self changeMenuStateWithActionView:_rightActionsView];
+}
+
+#pragma mark -
+- (void)handleNotificationMoveAllCellsBegan:(NSNotification *)notification
+{
+    [self swipeBeganWithDeltaX:[[notification.userInfo objectForKey:@"deltaX"] floatValue]];
+}
+
+- (void)handleNotificationMoveAllCellsChanged:(NSNotification *)notification
+{
+    switch (_menuState) {
+        case JHMenuTableViewCellState_All_TogglingLeft:
+        {
+            [self swipeToMoveLeftActionViewWithDeltaX:[[notification.userInfo objectForKey:@"deltaX"] floatValue]];
+        }
+            break;
+        case JHMenuTableViewCellState_All_TogglingRight:
+        {
+            [self swipeToMoveRightActionViewWithDeltaX:[[notification.userInfo objectForKey:@"deltaX"] floatValue]];
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)handleNotificationMoveAllCellsEnded:(NSNotification *)notification
+{
+    switch (_menuState) {
+        case JHMenuTableViewCellState_All_TogglingLeft:
+        {
+            [self swipeEndLeftActionViewWithDeltaX:[[notification.userInfo objectForKey:@"deltaX"] floatValue]];
+        }
+            break;
+        case JHMenuTableViewCellState_All_TogglingRight:
+        {
+            [self swipeEndRightActionViewWithDeltaX:[[notification.userInfo objectForKey:@"deltaX"] floatValue]];
+        }
+            break;
+        default:
+            break;
+    }
+}
 #pragma mark - JHMenuActionViewDelegate
 - (void)leftActionViewEventHandler:(JHActionBlock)actionBlock
 {
@@ -420,4 +579,10 @@
     
     [self changeMenuStateWithActionView:_rightActionsView];
 }
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 @end

@@ -79,6 +79,7 @@
             CGPoint point = [gesture locationInView:self];
             NSIndexPath *indexPath = [self indexPathForRowAtPoint:point];
             self.currentMenuTableCell = (JHMenuTableViewCell *)[self cellForRowAtIndexPath:indexPath];
+            
             [self.currentMenuTableCell swipeBeganWithDeltaX:deltaX];
         }
             break;
@@ -103,21 +104,28 @@
 {
     if ( gestureRecognizer == self.panGestureRecognizer )
     {
-        if(self.currentMenuTableCell && self.currentMenuTableCell.menuState != JHMenuTableViewCellState_Common)
+        BOOL result = YES;
+        if(self.currentMenuTableCell)
         {
-            CGPoint point = [gestureRecognizer locationInView:self];
-            NSIndexPath *indexPath = [self indexPathForRowAtPoint:point];
-            JHMenuTableViewCell *cell = (JHMenuTableViewCell *)[self cellForRowAtIndexPath:indexPath];
-            
-            if(cell != self.currentMenuTableCell)
+            if(self.currentMenuTableCell.menuState == JHMenuTableViewCellState_All_ToggledLeft || self.currentMenuTableCell.menuState == JHMenuTableViewCellState_All_ToggledRight)
             {
-                self.currentMenuTableCell.menuState = JHMenuTableViewCellState_Common;
-                return NO;
+                result = YES;
+            }
+            else if(self.currentMenuTableCell.menuState != JHMenuTableViewCellState_Common)
+            {
+                CGPoint point = [gestureRecognizer locationInView:self];
+                NSIndexPath *indexPath = [self indexPathForRowAtPoint:point];
+                JHMenuTableViewCell *cell = (JHMenuTableViewCell *)[self cellForRowAtIndexPath:indexPath];
+                
+                if(cell != self.currentMenuTableCell)
+                {
+                    self.currentMenuTableCell.menuState = JHMenuTableViewCellState_Common;
+                    result = NO;
+                }
             }
         }
-        
         CGPoint translation = [self.panGestureRecognizer translationInView:self];
-        return fabs(translation.y) <= fabs(translation.x);
+        return (fabs(translation.y) <= fabs(translation.x)) && result;
     }
     else
     {
