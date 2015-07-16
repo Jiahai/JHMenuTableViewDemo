@@ -21,7 +21,7 @@
 {
     [super setActions:actions moreButtonShow:JHActionRightMoreButtonShow moreButtonIndex:JHActionRightMoreButtonIndex actionButtonWidth:JHActionRightButtonWidth];
     
-//    self.frame = CGRectMake(self.superview.bounds.size.width-JHActionRightButtonWidth*actions.count, 0, JHActionRightButtonWidth*actions.count, self.bounds.size.height);
+    self.frame = CGRectMake(self.superview.bounds.size.width-JHActionRightButtonWidth*actions.count, 0, JHActionRightButtonWidth*actions.count, self.bounds.size.height);
 }
 
 - (CGFloat)divisionOriginX

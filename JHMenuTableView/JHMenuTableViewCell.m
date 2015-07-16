@@ -116,7 +116,6 @@
             toRect.origin.x = 0;
             
             self.leftActionsView.state = self.rightActionsView.state = JHMenuActionViewState_Common;
-            
         }
             break;
         case JHMenuTableViewCellState_ToggledLeft:
