@@ -6,3 +6,7 @@
 *.xcscheme
 
 JHMenuTableViewDemo.xcodeproj/xcuserdata/Jiahai.xcuserdatad/xcschemes/xcschememanagement.plist
+
+*.xcsettings
+
+*.xcbkptlist

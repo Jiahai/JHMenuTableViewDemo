@@ -75,8 +75,29 @@
 {
     [self removeGestureRecognizer:self.panGestureRecognizer];
     self.panGestureRecognizer = nil;
+    
+    [self setTableViewCellMenuState:JHMenuTableViewCellState_Common];
 }
 
+- (void)setTableViewCellMenuState:(JHMenuTableViewCellState)state
+{
+    switch (state) {
+        case JHMenuTableViewCellState_Common:
+        case JHMenuTableViewCellState_All_ToggledLeft:
+        case JHMenuTableViewCellState_All_ToggledRight:
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:JHNOTIFICATION_MoveAllCells_SetMenuState object:nil userInfo:@{@"menuState":@(state)}];
+        }
+            break;
+        case JHMenuTableViewCellState_ToggledLeft:
+        case JHMenuTableViewCellState_ToggledRight:
+        {
+            self.currentMenuTableCell.menuState = state;
+        }
+        default:
+            break;
+    }
+}
 
 #pragma mark - 手势处理
 - (void)panGestureHandler:(UIPanGestureRecognizer *)gesture
@@ -91,9 +112,12 @@
             
             [self.currentMenuTableCell swipeBeganWithDeltaX:deltaX];
             
-            if([self.jhMenuDelegate respondsToSelector:@selector(jhMenuTableViewSwipeBegan:)])
+            if(self.currentMenuTableCell.leftActions)
             {
-                [self.jhMenuDelegate jhMenuTableViewSwipeBegan:self];
+                if([self.jhMenuDelegate respondsToSelector:@selector(jhMenuTableViewSwipeBegan:currentJHMenuTableViewCell:)])
+                {
+                    [self.jhMenuDelegate jhMenuTableViewSwipeBegan:self currentJHMenuTableViewCell:self.currentMenuTableCell];
+                }
             }
         }
             break;
@@ -112,9 +136,9 @@
         {
             [self.currentMenuTableCell swipeEndedWithDeltaX:deltaX];
             
-            if([self.jhMenuDelegate respondsToSelector:@selector(jhMenuTableViewSwipeEnded:)])
+            if([self.jhMenuDelegate respondsToSelector:@selector(jhMenuTableViewSwipeEnded:currentJHMenuTableViewCell:)])
             {
-                [self.jhMenuDelegate jhMenuTableViewSwipeEnded:self];
+                [self.jhMenuDelegate jhMenuTableViewSwipeEnded:self currentJHMenuTableViewCell:self.currentMenuTableCell];
             }
         }
             break;

@@ -40,7 +40,7 @@ typedef NS_ENUM(NSInteger, JHMenuActionViewState){
 @property (nonatomic, strong)       UIButton    *moreBtn;
 @property (nonatomic, assign)       JHMenuActionViewState   state;
 
-- (void)setActions:(NSArray *)actions;
+- (void)setActions:(NSArray *)actions moreButtonShow:(BOOL)moreButtonShow moreButtonIndex:(NSInteger)moreButtonIndex actionButtonWidth:(NSInteger)actionButtonWidth;
 
 - (void)setMoreButtonHidden:(BOOL)hidden;
 

@@ -10,7 +10,9 @@
 #import "JHMenuTableView.h"
 
 @interface ViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,JHMenuTableViewDelegate>
-
+{
+    UIView      *_toolBarView;
+}
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end

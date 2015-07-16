@@ -67,11 +67,13 @@ typedef NS_ENUM(NSInteger, JHMenuTableViewCellState){
 
 @property (nonatomic, assign)   CGFloat                     deltaX;
 
+/**
+ *  菜单移动时，显示/隐藏的百分比，0-隐藏，1-全部显示
+ */
 @property (nonatomic, readonly, getter=leftPrecent) CGFloat leftPrecent;
 @property (nonatomic, readonly, getter=rightPrecent)CGFloat rightPrecent;
 
 
 - (void)swipeBeganWithDeltaX:(CGFloat)deltaX;
-
 - (void)swipeEndedWithDeltaX:(CGFloat)deltaX;
 @end

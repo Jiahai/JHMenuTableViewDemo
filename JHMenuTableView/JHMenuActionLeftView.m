@@ -7,8 +7,18 @@
 //
 
 #import "JHMenuActionLeftView.h"
+#import "JHMicro.h"
 
 @implementation JHMenuActionLeftView
+
+- (void)setActions:(NSArray *)actions
+{
+    [super setActions:actions moreButtonShow:JHActionLeftMoreButtonShow moreButtonIndex:JHActionLeftMoreButtonIndex actionButtonWidth:JHActionLeftButtonWidth];
+    
+    [self.moreBtn setTitle:@">" forState:UIControlStateNormal];
+    
+    self.frame = CGRectMake(0, 0, JHActionLeftButtonWidth*actions.count, self.bounds.size.height);
+}
 
 - (void)actionButtonClicked:(UIButton *)actionBtn
 {

@@ -39,7 +39,7 @@
     }
 }
 
-- (void)setActions:(NSArray *)actions
+- (void)setActions:(NSArray *)actions moreButtonShow:(BOOL)moreButtonShow moreButtonIndex:(NSInteger)moreButtonIndex actionButtonWidth:(NSInteger)actionButtonWidth
 {
     [self clearAllActions];
     
@@ -60,7 +60,7 @@
             [actionBtn setTitle:textAction.title forState:UIControlStateNormal];
             [actionBtn setTitleColor:textAction.titleColor forState:UIControlStateNormal];
             actionBtn.titleLabel.numberOfLines = 0;
-            actionBtn.frame = CGRectMake(JHActionButtonWidth*i, 0, JHActionButtonWidth, self.bounds.size.height);
+            actionBtn.frame = CGRectMake(actionButtonWidth*i, 0, actionButtonWidth, self.bounds.size.height);
             actionBtn.tag = i;
             actionBtn.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleHeight;
             [actionBtn addTarget:self action:@selector(actionButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -80,7 +80,7 @@
                 [actionBtn setImage:[UIImage imageNamed:imageAction.image_normal] forState:UIControlStateNormal];
                 [actionBtn setImage:[UIImage imageNamed:imageAction.image_selected] forState:UIControlStateSelected];
             }
-            actionBtn.frame = CGRectMake(JHActionButtonWidth*i, 0, JHActionButtonWidth, self.bounds.size.height);
+            actionBtn.frame = CGRectMake(actionButtonWidth*i, 0, actionButtonWidth, self.bounds.size.height);
             actionBtn.tag = i;
             actionBtn.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleHeight;
             [actionBtn addTarget:self action:@selector(actionButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -88,10 +88,10 @@
         }
     }
     
-    if(JHActionMoreButtonShow && _actions.count-1 > JHActionMoreButtonIndex)
+    if(moreButtonShow && _actions.count-1 > moreButtonIndex)
     {
         _canDivision = YES;
-        NSInteger i = _actions.count-JHActionMoreButtonIndex-1;
+        NSInteger i = _actions.count-moreButtonIndex-1;
         JHMenuTextAction *action = [_actions objectAtIndex:i];
         
         self.moreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -100,7 +100,7 @@
         [_moreBtn setTitle:@"<" forState:UIControlStateNormal];
         [_moreBtn setTitleColor:action.titleColor forState:UIControlStateNormal];
         _moreBtn.titleLabel.numberOfLines = 0;
-        _moreBtn.frame = CGRectMake(JHActionButtonWidth*i, 0, JHActionButtonWidth, self.bounds.size.height);
+        _moreBtn.frame = CGRectMake(actionButtonWidth*i, 0, actionButtonWidth, self.bounds.size.height);
         _moreBtn.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleHeight;
         [_moreBtn addTarget:self action:@selector(moreButtonClicked) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_moreBtn];

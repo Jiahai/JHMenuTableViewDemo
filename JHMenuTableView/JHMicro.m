@@ -9,16 +9,20 @@
 #import <Foundation/Foundation.h>
 
 
-const NSInteger     JHActionButtonWidth = 58;
-
+const BOOL          kJHMenuSupportLandspaceOrientation = NO;
 const NSInteger     JHTextActionButtonTextFontSize = 14;
-
-const BOOL          JHActionMoreButtonShow = YES;
-
-const NSInteger     JHActionMoreButtonIndex = 2;
-
 const float         JHMenuExpandAnimationDuration = 0.3;
 
+#pragma mark - Left
+const NSInteger     JHActionLeftButtonWidth = 68;
+const BOOL          JHActionLeftMoreButtonShow = NO;
+const NSInteger     JHActionLeftMoreButtonIndex = 0;
 const BOOL          kJHMenuMoveAllLeftCells = YES;
 
+
+#pragma mark - Right
+
+const NSInteger     JHActionRightButtonWidth = 58;
+const BOOL          JHActionRightMoreButtonShow = YES;
+const NSInteger     JHActionRightMoreButtonIndex = 2;
 const BOOL          kJHMenuMoveAllRightCells = NO;

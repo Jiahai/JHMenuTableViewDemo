@@ -12,7 +12,8 @@
 #import "JHMenuActionLeftView.h"
 #import "JHMenuActionRightView.h"
 
-#define JHMenuTriggerDistance   (JHActionButtonWidth*2/3)           //触发Menu动画的距离
+#define JHMenuLeftTriggerDistance   (JHActionLeftButtonWidth*2/3)           //触发左侧Menu动画的距离
+#define JHMenuRightTriggerDistance  (JHActionRightButtonWidth*2/3)          //触发右侧Menu动画的距离
 
 @interface JHMenuTableViewCell ()
 @property (nonatomic, assign)   CGFloat                         startOriginX;
@@ -29,18 +30,23 @@
     {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        self.leftActionsView = [[JHMenuActionLeftView alloc] initWithFrame:self.bounds];
+        CGRect rect = self.bounds;
+        rect.size.width = 0;
+        self.leftActionsView = [[JHMenuActionLeftView alloc] initWithFrame:rect];
         self.leftActionsView.backgroundColor = [UIColor whiteColor];
+        self.leftActionsView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
         self.leftActionsView.delegate = self;
         [self addSubview:_leftActionsView];
         
-        self.rightActionsView = [[JHMenuActionRightView alloc] initWithFrame:self.bounds];
+        self.rightActionsView = [[JHMenuActionRightView alloc] initWithFrame:rect];
         self.rightActionsView.backgroundColor = [UIColor whiteColor];
+        self.rightActionsView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleHeight;
         self.rightActionsView.delegate = self;
         [self addSubview:_rightActionsView];
         
         self.customView = [[UIView alloc] initWithFrame:self.bounds];
         self.customView.backgroundColor = [UIColor whiteColor];
+        self.customView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
         [self addSubview:_customView];
         
         if(kJHMenuMoveAllLeftCells || kJHMenuMoveAllRightCells)
@@ -48,7 +54,9 @@
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotificationMoveAllCellsBegan:) name:JHNOTIFICATION_MoveAllCells_Began object:nil];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotificationMoveAllCellsChanged:) name:JHNOTIFICATION_MoveAllCells_Changed object:nil];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotificationMoveAllCellsEnded:) name:JHNOTIFICATION_MoveAllCells_Ended object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotificationSetMenuState:) name:JHNOTIFICATION_MoveAllCells_SetMenuState object:nil];
         }
+        
     }
     return self;
 }
@@ -61,25 +69,27 @@
 
 - (void)layoutSubviews
 {
-    self.leftActionsView.frame = CGRectMake(0, 0, JHActionButtonWidth*_leftActions.count, self.bounds.size.height);
+    if(kJHMenuSupportLandspaceOrientation)
+    {
+        self.leftActionsView.frame = CGRectMake(0, 0, JHActionLeftButtonWidth*_leftActions.count, self.bounds.size.height);
 
-    self.rightActionsView.frame = CGRectMake(self.bounds.size.width-JHActionButtonWidth*_rightActions.count, 0, JHActionButtonWidth*_rightActions.count, self.bounds.size.height);
-    
-    self.customView.frame = CGRectMake(_customView.frame.origin.x, _customView.frame.origin.y, self.bounds.size.width, self.bounds.size.height);
-    
-    NSAssert(self.leftActionsView.jh_width+self.rightActionsView.jh_width<self.customView.jh_width, @"左菜单和右菜单会出现重合，请合理设置菜单Actions！");
+        self.rightActionsView.frame = CGRectMake(self.bounds.size.width-JHActionRightButtonWidth*_rightActions.count, 0, JHActionRightButtonWidth*_rightActions.count, self.bounds.size.height);
+        
+        self.customView.frame = CGRectMake(_customView.frame.origin.x, _customView.frame.origin.y, self.bounds.size.width, self.bounds.size.height);
+        NSAssert(self.leftActionsView.jh_width+self.rightActionsView.jh_width<self.customView.jh_width, @"左菜单和右菜单会出现重合，请合理设置菜单Actions！");
+    }
 }
 
-#pragma mark - 
+#pragma mark -
 
 - (CGFloat)leftPrecent
 {
-    return self.customView.jh_originX/self.leftActionsView.jh_width;
+    return self.leftActionsView.jh_width == 0 ? 0 : self.customView.jh_originX/self.leftActionsView.jh_width;
 }
 
 - (CGFloat)rightPrecent
 {
-    return ABS(self.customView.jh_originX)/self.rightActionsView.jh_width;
+    return self.rightActionsView.jh_width == 0 ? 0 : ABS(self.customView.jh_originX)/self.rightActionsView.jh_width;
 }
 
 #pragma mark -
@@ -100,17 +110,16 @@
 
 - (void)setMenuState:(JHMenuTableViewCellState)menuState
 {
-    _menuState = menuState;
-    
     CGRect fromRect = self.customView.frame;
     CGRect toRect = fromRect;
     
-    switch (_menuState) {
+    switch (menuState) {
         case JHMenuTableViewCellState_Common:
         {
             toRect.origin.x = 0;
             
             self.leftActionsView.state = self.rightActionsView.state = JHMenuActionViewState_Common;
+            
         }
             break;
         case JHMenuTableViewCellState_ToggledLeft:
@@ -118,18 +127,14 @@
         {
             switch (_leftActionsView.state) {
                 case JHMenuActionViewState_Common:
+                case JHMenuActionViewState_Expanded:
                 {
-                    toRect.origin.x = 0;
+                    toRect.origin.x = _leftActionsView.jh_width;
                 }
                     break;
                 case JHMenuActionViewState_Division:
                 {
                     toRect.origin.x = _leftActionsView.moreBtn.jh_originX + _leftActionsView.moreBtn.jh_width;
-                }
-                    break;
-                case JHMenuActionViewState_Expanded:
-                {
-                    toRect.origin.x = _leftActionsView.jh_width;
                 }
                     break;
             }
@@ -140,18 +145,14 @@
         {
             switch (_rightActionsView.state) {
                 case JHMenuActionViewState_Common:
+                case JHMenuActionViewState_Expanded:
                 {
-                    toRect.origin.x = 0;
+                    toRect.origin.x = -_rightActionsView.jh_width;
                 }
                     break;
                 case JHMenuActionViewState_Division:
                 {
                     toRect.origin.x = _rightActionsView.divisionOriginX;
-                }
-                    break;
-                case JHMenuActionViewState_Expanded:
-                {
-                    toRect.origin.x = -_rightActionsView.jh_width;
                 }
                     break;
             }
@@ -161,6 +162,8 @@
         default:
             break;
     }
+    
+    _menuState = menuState;
     
     [UIView animateWithDuration:JHMenuExpandAnimationDuration animations:^{
         self.customView.frame = toRect;
@@ -309,7 +312,11 @@
             break;
     }
 }
-
+/**
+ *  根据ActionView的state设置menuState，手动滑动时可用
+ *
+ *  @param actionView left/rightActionView
+ */
 - (void)changeMenuStateWithActionView:(JHMenuActionView *)actionView
 {
     if(actionView == _leftActionsView)
@@ -369,7 +376,7 @@
     {
         //分段显示时，移动customView处理"更多"按钮的动画
         if(deltaX > 0)
-            self.leftActionsView.moreBtn.alpha = 1 - MIN(1, ABS(deltaX)/JHMenuTriggerDistance);
+            self.leftActionsView.moreBtn.alpha = 1 - MIN(1, ABS(deltaX)/JHMenuLeftTriggerDistance);
     }
     
     if(originX < 0)
@@ -387,8 +394,7 @@
     if(originX > originX_R)
         originX = originX_R;
     
-    
-    self.customView.jh_originX = originX;
+    self.customView.jh_originX = MIN(originX,_leftActionsView.jh_width);
 }
 
 - (void)swipeToMoveRightActionViewWithDeltaX:(CGFloat)deltaX
@@ -399,7 +405,7 @@
     {
         //分段显示时，移动customView处理"更多"按钮的动画
         if(deltaX < 0)
-            self.rightActionsView.moreBtn.alpha = 1 - MIN(1, ABS(deltaX)/JHMenuTriggerDistance);
+            self.rightActionsView.moreBtn.alpha = 1 - MIN(1, ABS(deltaX)/JHMenuRightTriggerDistance);
     }
     
     if(originX > 0)
@@ -417,7 +423,7 @@
     if(originX < originX_L)
         originX = originX_L;
                 
-    self.customView.jh_originX = originX;
+    self.customView.jh_originX = MAX(originX,-_rightActionsView.jh_width);
 }
 
 - (void)swipeEndLeftActionViewWithDeltaX:(CGFloat)deltaX
@@ -425,7 +431,7 @@
     switch (_leftActionsView.state) {
         case JHMenuActionViewState_Common:
         {
-            if(deltaX > JHMenuTriggerDistance)
+            if(deltaX > JHMenuLeftTriggerDistance)
             {
                 _leftActionsView.state = _leftActionsView.canDivision ? JHMenuActionViewState_Division : JHMenuActionViewState_Expanded;
             }
@@ -437,11 +443,11 @@
             break;
         case JHMenuActionViewState_Division:
         {
-            if(deltaX < -JHMenuTriggerDistance)
+            if(deltaX < -JHMenuLeftTriggerDistance)
             {
                 _leftActionsView.state = JHMenuActionViewState_Common;
             }
-            else if(deltaX > JHMenuTriggerDistance)
+            else if(deltaX > JHMenuLeftTriggerDistance)
             {
                 _leftActionsView.state = JHMenuActionViewState_Expanded;
             }
@@ -453,7 +459,7 @@
             break;
         case JHMenuActionViewState_Expanded:
         {
-            if(deltaX < -JHMenuTriggerDistance)
+            if(deltaX < -JHMenuLeftTriggerDistance)
             {
                 _leftActionsView.state = JHMenuActionViewState_Common;
             }
@@ -473,7 +479,7 @@
     switch (_rightActionsView.state) {
         case JHMenuActionViewState_Common:
         {
-            if(deltaX < -JHMenuTriggerDistance)
+            if(deltaX < -JHMenuRightTriggerDistance)
             {
                 _rightActionsView.state = _rightActionsView.canDivision ? JHMenuActionViewState_Division : JHMenuActionViewState_Expanded;
             }
@@ -485,11 +491,11 @@
             break;
         case JHMenuActionViewState_Division:
         {
-            if(deltaX < -JHMenuTriggerDistance)
+            if(deltaX < -JHMenuRightTriggerDistance)
             {
                 _rightActionsView.state = JHMenuActionViewState_Expanded;
             }
-            else if(deltaX > JHMenuTriggerDistance)
+            else if(deltaX > JHMenuRightTriggerDistance)
             {
                 _rightActionsView.state = JHMenuActionViewState_Common;
             }
@@ -501,7 +507,7 @@
             break;
         case JHMenuActionViewState_Expanded:
         {
-            if(deltaX > JHMenuTriggerDistance)
+            if(deltaX > JHMenuRightTriggerDistance)
             {
                 _rightActionsView.state = JHMenuActionViewState_Common;
             }
@@ -556,6 +562,11 @@
         default:
             break;
     }
+}
+
+- (void)handleNotificationSetMenuState:(NSNotification *)notification
+{
+    self.menuState = [[notification.userInfo objectForKey:@"menuState"] integerValue];
 }
 #pragma mark - JHMenuActionViewDelegate
 - (void)leftActionViewEventHandler:(JHActionBlock)actionBlock

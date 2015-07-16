@@ -22,8 +22,25 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     [_tableView openJHTableViewMenu];
-    
     _tableView.jhMenuDelegate = self;
+    
+    
+    _toolBarView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, self.view.bounds.size.width, 60)];
+    _toolBarView.backgroundColor = [UIColor orangeColor];
+    _toolBarView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+    [self.view addSubview:_toolBarView];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:_toolBarView.bounds];
+    label.backgroundColor = [UIColor clearColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor whiteColor];
+    label.text = @"Click me,Thanks for using! ^_^";
+    [_toolBarView addSubview:label];
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = _tableView.bounds;
+    [btn addTarget:self action:@selector(buttonClicked) forControlEvents:UIControlEventTouchUpInside];
+    [_toolBarView addSubview:btn];
     
     self.selectedArray = [NSMutableArray array];
     
@@ -59,8 +76,6 @@
         JHLog(@"删除:%@,row:%d",cell,indexPath.row);
     };
     
-    self.actions = @[action,action1,action2,action3];
-    self.actions1 = @[action,action2,action3];
     
     JHMenuImageAction *iAction = [[JHMenuImageAction alloc] init];
     iAction.image_normal = @"jhmenu_unchecked.png";
@@ -76,8 +91,27 @@
         }
         JHLog(@"选中:%@,row:%d",cell,indexPath.row);
     };
+    
+    self.actions = @[action,action1,action2,action3];
+    self.actions1 = @[action,iAction,action2];
     self.iActions = @[iAction];
 }
+
+- (void)buttonClicked
+{
+    [_tableView setTableViewCellMenuState:JHMenuTableViewCellState_Common];
+    
+    CGRect rect = _toolBarView.bounds;
+    rect.origin.y = self.view.bounds.size.height;
+    
+    [UIView animateWithDuration:JHMenuExpandAnimationDuration animations:^{
+        _toolBarView.frame = rect;
+    } completion:^(BOOL finished) {
+        _toolBarView.alpha = 1;
+    }];
+}
+
+#pragma mark -
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -97,9 +131,12 @@
     
     if(cell == nil)
     {
+        //-----------------------此处请务必按此设置--------------------------
         cell = [[JHMenuTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         cell.rightActions = self.actions;
         cell.leftActions = self.iActions;
+        cell.menuState = tableView.currentMenuTableCell.menuState;
+        //----------------------------------------------------------------
         
         UILabel *textField = [[UILabel alloc] initWithFrame:CGRectMake(0, 6, 120, 32)];
         textField.tag = 88;
@@ -119,10 +156,9 @@
         cell.rightActions = self.actions;
     }
     
-    JHMenuImageAction *imageAction = [self.iActions objectAtIndex:0];
-    imageAction.selected = [self.selectedArray containsObject:indexPath];
-    
-    cell.leftActions = self.iActions;
+//    JHMenuImageAction *imageAction = [self.iActions objectAtIndex:0];
+//    imageAction.selected = [self.selectedArray containsObject:indexPath];
+//    cell.leftActions = self.iActions;
     
     
     UILabel *label = (UILabel *)[cell.customView viewWithTag:88];
@@ -133,17 +169,60 @@
 
 #pragma mark - JHMenuTableViewDelegate
 
-- (void)jhMenuTableViewSwipeBegan:(UITableView *)tableView
+- (void)jhMenuTableViewSwipeBegan:(UITableView *)tableView currentJHMenuTableViewCell:(JHMenuTableViewCell *)cell
 {
     NSLog(@"Swipe Began");
 }
 - (void)jhMenuTableViewSwipePrecentChanged:(UITableView *)tableView currentJHMenuTableViewCell:(JHMenuTableViewCell *)cell
 {
     NSLog(@"Swipe Precent:%.2f   right:%.2f",cell.leftPrecent,cell.rightPrecent);
+    switch (cell.menuState) {
+        case JHMenuTableViewCellState_All_TogglingLeft:
+        {
+            CGRect rect = _toolBarView.bounds;
+            rect.origin.y = self.view.bounds.size.height - cell.leftPrecent*rect.size.height;
+            _toolBarView.frame = rect;
+            
+            _toolBarView.alpha = cell.leftPrecent;
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
-- (void)jhMenuTableViewSwipeEnded:(UITableView *)tableView
+- (void)jhMenuTableViewSwipeEnded:(UITableView *)tableView currentJHMenuTableViewCell:(JHMenuTableViewCell *)cell
 {
     NSLog(@"Swipe Ended");
+    CGRect rect = _toolBarView.bounds;
+    
+    switch (cell.menuState) {
+        case JHMenuTableViewCellState_Common:
+        {
+            rect.origin.y = self.view.bounds.size.height;
+            
+            [UIView animateWithDuration:JHMenuExpandAnimationDuration animations:^{
+                _toolBarView.frame = rect;
+            } completion:^(BOOL finished) {
+                _toolBarView.alpha = 1;
+            }];
+        }
+            break;
+        case JHMenuTableViewCellState_All_ToggledLeft:
+        {
+            rect.origin.y = self.view.bounds.size.height - rect.size.height;
+            
+            [UIView animateWithDuration:JHMenuExpandAnimationDuration animations:^{
+                _toolBarView.frame = rect;
+            } completion:^(BOOL finished) {
+                _toolBarView.alpha = 1;
+            }];
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 
