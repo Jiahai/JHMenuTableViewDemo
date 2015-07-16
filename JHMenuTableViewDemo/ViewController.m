@@ -156,9 +156,9 @@
         cell.rightActions = self.actions;
     }
     
-//    JHMenuImageAction *imageAction = [self.iActions objectAtIndex:0];
-//    imageAction.selected = [self.selectedArray containsObject:indexPath];
-//    cell.leftActions = self.iActions;
+    JHMenuImageAction *imageAction = [self.iActions objectAtIndex:0];
+    imageAction.selected = [self.selectedArray containsObject:indexPath];
+    cell.leftActions = self.iActions;
     
     
     UILabel *label = (UILabel *)[cell.customView viewWithTag:88];

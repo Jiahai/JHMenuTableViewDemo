@@ -46,7 +46,7 @@
         
         self.customView = [[UIView alloc] initWithFrame:self.bounds];
         self.customView.backgroundColor = [UIColor whiteColor];
-        self.customView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+        self.customView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
         [self addSubview:_customView];
         
         if(kJHMenuMoveAllLeftCells || kJHMenuMoveAllRightCells)
@@ -69,15 +69,12 @@
 
 - (void)layoutSubviews
 {
-    if(kJHMenuSupportLandspaceOrientation)
-    {
-        self.leftActionsView.frame = CGRectMake(0, 0, JHActionLeftButtonWidth*_leftActions.count, self.bounds.size.height);
+    self.leftActionsView.frame = CGRectMake(0, 0, JHActionLeftButtonWidth*_leftActions.count, self.bounds.size.height);
 
-        self.rightActionsView.frame = CGRectMake(self.bounds.size.width-JHActionRightButtonWidth*_rightActions.count, 0, JHActionRightButtonWidth*_rightActions.count, self.bounds.size.height);
-        
-        self.customView.frame = CGRectMake(_customView.frame.origin.x, _customView.frame.origin.y, self.bounds.size.width, self.bounds.size.height);
-        NSAssert(self.leftActionsView.jh_width+self.rightActionsView.jh_width<self.customView.jh_width, @"左菜单和右菜单会出现重合，请合理设置菜单Actions！");
-    }
+    self.rightActionsView.frame = CGRectMake(self.bounds.size.width-JHActionRightButtonWidth*_rightActions.count, 0, JHActionRightButtonWidth*_rightActions.count, self.bounds.size.height);
+    
+    self.customView.frame = CGRectMake(_customView.frame.origin.x, _customView.frame.origin.y, self.bounds.size.width, self.bounds.size.height);
+    NSAssert(self.leftActionsView.jh_width+self.rightActionsView.jh_width<self.customView.jh_width, @"左菜单和右菜单会出现重合，请合理设置菜单Actions！");
 }
 
 #pragma mark -
