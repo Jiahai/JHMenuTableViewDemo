@@ -16,8 +16,8 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "JHMenuTableView"
-  s.version      = "1.0.1"
-  s.summary      = "仿网易邮箱侧滑菜单"
+  s.version      = "1.2"
+  s.summary      = "UITableview左右侧滑菜单"
 
   # s.description  = <<-DESC
   #                 A longer description of JHMenuTableView in Markdown format.
@@ -29,7 +29,7 @@ Pod::Spec.new do |s|
   #                 DESC
 
   s.homepage     = "https://github.com/Jiahai/JHMenuTableViewDemo"
-  s.screenshots  = "https://github.com/Jiahai/JHMenuTableViewDemo/raw/master/SnapShot/JHMenuTableViewDemo.gif"
+  # s.screenshots  = "https://github.com/Jiahai/JHMenuTableViewDemo/blob/master/SnapShot/JHMenuTableViewDemo.gif"
 
 
   # ―――  Spec License  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -78,7 +78,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/Jiahai/JHMenuTableViewDemo.git", :tag => "1.0.1" }
+  s.source       = { :git => "https://github.com/Jiahai/JHMenuTableViewDemo.git", :tag => "1.2" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -104,7 +104,7 @@ Pod::Spec.new do |s|
   #
 
   # s.resource  = "icon.png"
-  # s.resources = "Resources/*.png"
+  s.resources = "JHMenuTableView/Resources/Images/*.png"
 
   # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
