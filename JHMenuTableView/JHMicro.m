@@ -10,19 +10,19 @@
 
 
 const BOOL          kJHMenuSupportLandspaceOrientation = NO;
-const NSInteger     JHTextActionButtonTextFontSize = 14;
-const float         JHMenuExpandAnimationDuration = 0.2;
+const NSInteger     kJHTextActionButtonTextFontSize = 14;
+const float         kJHMenuExpandAnimationDuration = 0.2;
 
 #pragma mark - Left
-const NSInteger     JHActionLeftButtonWidth = 68;
-const BOOL          JHActionLeftMoreButtonShow = NO;
-const NSInteger     JHActionLeftMoreButtonIndex = 0;
+const NSInteger     kJHActionLeftButtonWidth = 68;
+const BOOL          kJHActionLeftMoreButtonShow = NO;
+const NSInteger     kJHActionLeftMoreButtonIndex = 0;
 const BOOL          kJHMenuMoveAllLeftCells = YES;
 
 
 #pragma mark - Right
 
-const NSInteger     JHActionRightButtonWidth = 58;
-const BOOL          JHActionRightMoreButtonShow = YES;
-const NSInteger     JHActionRightMoreButtonIndex = 2;
+const NSInteger     kJHActionRightButtonWidth = 58;
+const BOOL          kJHActionRightMoreButtonShow = YES;
+const NSInteger     kJHActionRightMoreButtonIndex = 2;
 const BOOL          kJHMenuMoveAllRightCells = NO;

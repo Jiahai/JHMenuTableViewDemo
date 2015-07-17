@@ -30,25 +30,25 @@ extern const BOOL           kJHMenuSupportLandspaceOrientation;
 /**
  *  JHTextActionButton文本的字体
  */
-extern const NSInteger      JHTextActionButtonTextFontSize;
+extern const NSInteger      kJHTextActionButtonTextFontSize;
 /**
  *  Menu展开/收缩的动画持续时间，单位为秒
  */
-extern const float          JHMenuExpandAnimationDuration;
+extern const float          kJHMenuExpandAnimationDuration;
 
 #pragma mark - 左侧菜单参数配置
 /**
  *  左侧JHActionButton的宽度
  */
-extern const NSInteger      JHActionLeftButtonWidth;
+extern const NSInteger      kJHActionLeftButtonWidth;
 /**
  *  展开左侧Menu时，是否显示更多按钮
  */
-extern const BOOL           JHActionLeftMoreButtonShow;
+extern const BOOL           kJHActionLeftMoreButtonShow;
 /**
  *  左侧菜单更多按钮出现的index，从左向右，从0开始
  */
-extern const NSInteger      JHActionLeftMoreButtonIndex;
+extern const NSInteger      kJHActionLeftMoreButtonIndex;
 /**
  *  全部左侧菜单联动
  */
@@ -59,15 +59,15 @@ extern const BOOL           kJHMenuMoveAllLeftCells;
 /**
  *  右侧侧JHActionButton的宽度
  */
-extern const NSInteger      JHActionRightButtonWidth;
+extern const NSInteger      kJHActionRightButtonWidth;
 /**
  *  展开右侧Menu时，是否显示更多按钮
  */
-extern const BOOL           JHActionRightMoreButtonShow;
+extern const BOOL           kJHActionRightMoreButtonShow;
 /**
  *  右侧菜单更多按钮出现的index，从右向左，从0开始
  */
-extern const NSInteger      JHActionRightMoreButtonIndex;
+extern const NSInteger      kJHActionRightMoreButtonIndex;
 /**
  *  全部右侧菜单联动
  */

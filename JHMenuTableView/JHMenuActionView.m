@@ -55,7 +55,7 @@
         {
             JHMenuTextAction *textAction = (JHMenuTextAction *)action;
             UIButton *actionBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-            actionBtn.titleLabel.font = [UIFont systemFontOfSize:JHTextActionButtonTextFontSize];
+            actionBtn.titleLabel.font = [UIFont systemFontOfSize:kJHTextActionButtonTextFontSize];
             [actionBtn setBackgroundColor:textAction.backgroundColor];
             [actionBtn setTitle:textAction.title forState:UIControlStateNormal];
             [actionBtn setTitleColor:textAction.titleColor forState:UIControlStateNormal];
@@ -95,7 +95,7 @@
         JHMenuTextAction *action = [_actions objectAtIndex:i];
         
         self.moreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _moreBtn.titleLabel.font = [UIFont systemFontOfSize:JHTextActionButtonTextFontSize];
+        _moreBtn.titleLabel.font = [UIFont systemFontOfSize:kJHTextActionButtonTextFontSize];
         [_moreBtn setBackgroundColor:action.backgroundColor];
         [_moreBtn setTitle:@"<" forState:UIControlStateNormal];
         [_moreBtn setTitleColor:action.titleColor forState:UIControlStateNormal];
@@ -109,7 +109,7 @@
 
 - (void)setMoreButtonHidden:(BOOL)hidden
 {
-    [UIView animateWithDuration:JHMenuExpandAnimationDuration animations:^{
+    [UIView animateWithDuration:kJHMenuExpandAnimationDuration animations:^{
         _moreBtn.alpha = hidden ? 0 : 1;
     } completion:^(BOOL finished) {
         _moreBtn.hidden = hidden;

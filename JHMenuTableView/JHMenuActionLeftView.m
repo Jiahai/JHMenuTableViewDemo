@@ -13,11 +13,11 @@
 
 - (void)setActions:(NSArray *)actions
 {
-    [super setActions:actions moreButtonShow:JHActionLeftMoreButtonShow moreButtonIndex:JHActionLeftMoreButtonIndex actionButtonWidth:JHActionLeftButtonWidth];
+    [super setActions:actions moreButtonShow:kJHActionLeftMoreButtonShow moreButtonIndex:kJHActionLeftMoreButtonIndex actionButtonWidth:kJHActionLeftButtonWidth];
     
     [self.moreBtn setTitle:@">" forState:UIControlStateNormal];
     
-    self.frame = CGRectMake(0, 0, JHActionLeftButtonWidth*actions.count, self.bounds.size.height);
+    self.frame = CGRectMake(0, 0, kJHActionLeftButtonWidth*actions.count, self.bounds.size.height);
 }
 
 - (void)actionButtonClicked:(UIButton *)actionBtn

@@ -103,7 +103,7 @@
     CGRect rect = _toolBarView.bounds;
     rect.origin.y = self.view.bounds.size.height;
     
-    [UIView animateWithDuration:JHMenuExpandAnimationDuration animations:^{
+    [UIView animateWithDuration:kJHMenuExpandAnimationDuration animations:^{
         _toolBarView.frame = rect;
     } completion:^(BOOL finished) {
         _toolBarView.alpha = 1;
@@ -129,9 +129,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *identifier = @"cell";
-    
     JHMenuTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    
     if(cell == nil)
     {
         //-----------------------此处请务必按此设置--------------------------
@@ -205,7 +203,7 @@
         {
             rect.origin.y = self.view.bounds.size.height;
             
-            [UIView animateWithDuration:JHMenuExpandAnimationDuration animations:^{
+            [UIView animateWithDuration:kJHMenuExpandAnimationDuration animations:^{
                 _toolBarView.frame = rect;
             } completion:^(BOOL finished) {
                 _toolBarView.alpha = 1;
@@ -220,7 +218,7 @@
         {
             rect.origin.y = self.view.bounds.size.height - rect.size.height;
             
-            [UIView animateWithDuration:JHMenuExpandAnimationDuration animations:^{
+            [UIView animateWithDuration:kJHMenuExpandAnimationDuration animations:^{
                 _toolBarView.frame = rect;
             } completion:^(BOOL finished) {
                 _toolBarView.alpha = 1;

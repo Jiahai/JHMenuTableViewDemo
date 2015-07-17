@@ -12,8 +12,8 @@
 #import "JHMenuActionLeftView.h"
 #import "JHMenuActionRightView.h"
 
-#define JHMenuLeftTriggerDistance   (JHActionLeftButtonWidth*2/3)           //触发左侧Menu动画的距离
-#define JHMenuRightTriggerDistance  (JHActionRightButtonWidth*2/3)          //触发右侧Menu动画的距离
+#define JHMenuLeftTriggerDistance   (kJHActionLeftButtonWidth*2/3)           //触发左侧Menu动画的距离
+#define JHMenuRightTriggerDistance  (kJHActionRightButtonWidth*2/3)          //触发右侧Menu动画的距离
 
 @interface JHMenuTableViewCell ()
 @property (nonatomic, assign)   CGFloat                         startOriginX;
@@ -74,7 +74,7 @@
 {
 //    self.leftActionsView.frame = CGRectMake(0, 0, JHActionLeftButtonWidth*_leftActions.count, self.bounds.size.height);
 
-    self.rightActionsView.frame = CGRectMake(self.bounds.size.width-JHActionRightButtonWidth*_rightActions.count, 0, _rightActionsView.bounds.size.width, self.bounds.size.height);
+    self.rightActionsView.frame = CGRectMake(self.bounds.size.width-kJHActionRightButtonWidth*_rightActions.count, 0, _rightActionsView.bounds.size.width, self.bounds.size.height);
     
     self.customView.frame = CGRectMake(_customView.frame.origin.x, _customView.frame.origin.y, self.bounds.size.width, self.bounds.size.height);
     NSAssert(self.leftActionsView.jh_width+self.rightActionsView.jh_width<self.customView.jh_width, @"左菜单和右菜单会出现重合，请合理设置菜单Actions！");
@@ -174,7 +174,7 @@
     
     _menuState = menuState;
     
-    [UIView animateWithDuration:JHMenuExpandAnimationDuration animations:^{
+    [UIView animateWithDuration:kJHMenuExpandAnimationDuration animations:^{
         self.customView.frame = toRect;
     } completion:^(BOOL finished) {
         //解决重用时设置初始状态时，位置有误差的问题。
