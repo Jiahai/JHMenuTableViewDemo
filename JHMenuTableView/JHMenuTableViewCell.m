@@ -366,6 +366,9 @@
 
 - (void)swipeToMoveLeftActionViewWithDeltaX:(CGFloat)deltaX
 {
+    if(self.leftActions == nil || self.leftActions.count == 0)
+        return;
+    
     CGFloat originX = self.startOriginX + deltaX;
     
     if(self.leftActionsView.state == JHMenuActionViewState_Division)
@@ -395,6 +398,9 @@
 
 - (void)swipeToMoveRightActionViewWithDeltaX:(CGFloat)deltaX
 {
+    if(self.rightActions == nil || self.rightActions.count == 0)
+        return;
+    
     CGFloat originX = self.startOriginX + deltaX;
                 
     if(self.rightActionsView.state == JHMenuActionViewState_Division)
@@ -424,6 +430,12 @@
 
 - (void)swipeEndLeftActionViewWithDeltaX:(CGFloat)deltaX
 {
+    if(self.leftActions == nil || self.leftActions.count == 0)
+    {
+        self.menuState = JHMenuTableViewCellState_Common;
+        return;
+    }
+        
     switch (_leftActionsView.state) {
         case JHMenuActionViewState_Common:
         {
@@ -472,6 +484,11 @@
 
 - (void)swipeEndRightActionViewWithDeltaX:(CGFloat)deltaX
 {
+    if(self.rightActions == nil || self.rightActions.count == 0)
+    {
+        self.menuState = JHMenuTableViewCellState_Common;
+        return;
+    }
     switch (_rightActionsView.state) {
         case JHMenuActionViewState_Common:
         {

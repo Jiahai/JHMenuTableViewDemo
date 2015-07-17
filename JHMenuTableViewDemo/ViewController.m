@@ -133,8 +133,9 @@
     {
         //-----------------------此处请务必按此设置--------------------------
         cell = [[JHMenuTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-        cell.rightActions = self.actions;
+        //不需要的菜单可以不用设置
         cell.leftActions = self.iActions;
+        cell.rightActions = self.actions;
         cell.menuState = tableView.currentMenuTableCell.menuState;
         //----------------------------------------------------------------
         
