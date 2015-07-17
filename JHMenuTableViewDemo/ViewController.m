@@ -76,7 +76,6 @@
         JHLog(@"删除:%@,row:%d",cell,indexPath.row);
     };
     
-    
     JHMenuImageAction *iAction = [[JHMenuImageAction alloc] init];
     iAction.image_normal = @"jhmenu_unchecked.png";
     iAction.image_selected = @"jhmenu_checked.png";
@@ -93,7 +92,7 @@
     };
     
     self.actions = @[action,action1,action2,action3];
-    self.actions1 = @[action,iAction,action2];
+    self.actions1 = @[action,action1,action2];
     self.iActions = @[iAction];
 }
 
@@ -108,6 +107,10 @@
         _toolBarView.frame = rect;
     } completion:^(BOOL finished) {
         _toolBarView.alpha = 1;
+        
+        [self.selectedArray removeAllObjects];
+        //清除数据后记得刷新，否则check按钮的状态不会变
+        [_tableView reloadData];
     }];
 }
 
@@ -206,6 +209,10 @@
                 _toolBarView.frame = rect;
             } completion:^(BOOL finished) {
                 _toolBarView.alpha = 1;
+                
+                [self.selectedArray removeAllObjects];
+                //清除数据后记得刷新，否则check按钮的状态不会变
+                [_tableView reloadData];
             }];
         }
             break;

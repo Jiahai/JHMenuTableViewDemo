@@ -64,14 +64,17 @@
 - (void)prepareForReuse
 {
     if(!(_menuState == JHMenuTableViewCellState_All_ToggledLeft || _menuState == JHMenuTableViewCellState_All_ToggledRight))
+    {
+        self.leftActionsView.state = self.rightActionsView.state = JHMenuActionViewState_Common;
         self.menuState = JHMenuTableViewCellState_Common;
+    }
 }
 
 - (void)layoutSubviews
 {
-    self.leftActionsView.frame = CGRectMake(0, 0, JHActionLeftButtonWidth*_leftActions.count, self.bounds.size.height);
+//    self.leftActionsView.frame = CGRectMake(0, 0, JHActionLeftButtonWidth*_leftActions.count, self.bounds.size.height);
 
-    self.rightActionsView.frame = CGRectMake(self.bounds.size.width-JHActionRightButtonWidth*_rightActions.count, 0, JHActionRightButtonWidth*_rightActions.count, self.bounds.size.height);
+    self.rightActionsView.frame = CGRectMake(self.bounds.size.width-JHActionRightButtonWidth*_rightActions.count, 0, _rightActionsView.bounds.size.width, self.bounds.size.height);
     
     self.customView.frame = CGRectMake(_customView.frame.origin.x, _customView.frame.origin.y, self.bounds.size.width, self.bounds.size.height);
     NSAssert(self.leftActionsView.jh_width+self.rightActionsView.jh_width<self.customView.jh_width, @"左菜单和右菜单会出现重合，请合理设置菜单Actions！");
@@ -123,14 +126,19 @@
         {
             switch (_leftActionsView.state) {
                 case JHMenuActionViewState_Common:
-                case JHMenuActionViewState_Expanded:
                 {
+                    _leftActionsView.state = JHMenuActionViewState_Expanded;
                     toRect.origin.x = _leftActionsView.jh_width;
                 }
                     break;
                 case JHMenuActionViewState_Division:
                 {
                     toRect.origin.x = _leftActionsView.moreBtn.jh_originX + _leftActionsView.moreBtn.jh_width;
+                }
+                    break;
+                case JHMenuActionViewState_Expanded:
+                {
+                    toRect.origin.x = _leftActionsView.jh_width;
                 }
                     break;
             }
@@ -141,14 +149,19 @@
         {
             switch (_rightActionsView.state) {
                 case JHMenuActionViewState_Common:
-                case JHMenuActionViewState_Expanded:
                 {
+                    _rightActionsView.state = JHMenuActionViewState_Expanded;
                     toRect.origin.x = -_rightActionsView.jh_width;
                 }
                     break;
                 case JHMenuActionViewState_Division:
                 {
                     toRect.origin.x = _rightActionsView.divisionOriginX;
+                }
+                    break;
+                case JHMenuActionViewState_Expanded:
+                {
+                    toRect.origin.x = -_rightActionsView.jh_width;
                 }
                     break;
             }
@@ -162,6 +175,9 @@
     _menuState = menuState;
     
     [UIView animateWithDuration:JHMenuExpandAnimationDuration animations:^{
+        self.customView.frame = toRect;
+    } completion:^(BOOL finished) {
+        //解决重用时设置初始状态时，位置有误差的问题。
         self.customView.frame = toRect;
     }];
 }
@@ -535,7 +551,7 @@
     [self changeMenuStateWithActionView:_rightActionsView];
 }
 
-#pragma mark -
+#pragma mark - 全局移动，通知处理
 - (void)handleNotificationMoveAllCellsBegan:(NSNotification *)notification
 {
     [self swipeBeganWithDeltaX:[[notification.userInfo objectForKey:@"deltaX"] floatValue]];

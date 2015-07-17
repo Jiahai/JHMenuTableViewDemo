@@ -11,7 +11,7 @@
 
 const BOOL          kJHMenuSupportLandspaceOrientation = NO;
 const NSInteger     JHTextActionButtonTextFontSize = 14;
-const float         JHMenuExpandAnimationDuration = 0.3;
+const float         JHMenuExpandAnimationDuration = 0.2;
 
 #pragma mark - Left
 const NSInteger     JHActionLeftButtonWidth = 68;
