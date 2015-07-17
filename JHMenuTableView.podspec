@@ -19,14 +19,11 @@ Pod::Spec.new do |s|
   s.version      = "1.2"
   s.summary      = "UITableview左右侧滑菜单"
 
-  # s.description  = <<-DESC
-  #                 A longer description of JHMenuTableView in Markdown format.
-  #
-  #                 * Think: Why did you write this? What is the focus? What does it do?
-  #                 * CocoaPods will be using this to generate tags, and improve search results.
-  #                 * Try to keep it short, snappy and to the point.
-  #                 * Finally, don't worry about the indent, CocoaPods strips it!
-  #                 DESC
+  s.description  = <<-DESC
+                    1、加入左侧侧滑菜单功能
+                    2、增加左/右菜单整体侧滑功能
+                    3、增加Delegate回调
+                   DESC
 
   s.homepage     = "https://github.com/Jiahai/JHMenuTableViewDemo"
   # s.screenshots  = "https://github.com/Jiahai/JHMenuTableViewDemo/blob/master/SnapShot/JHMenuTableViewDemo.gif"
