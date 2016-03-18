@@ -13,7 +13,7 @@
 
 @interface UITableView ()
 @property (nonatomic, weak)     JHMenuTableViewCell             *currentMenuTableCell;
-@property (nonatomic, strong)   UIPanGestureRecognizer          *panGestureRecognizer;
+@property (nonatomic, strong)   UIPanGestureRecognizer          *jhPanGestureRecognizer;
 @end
 
 @implementation UITableView (JHMenu)
@@ -44,16 +44,16 @@
 
 - (void)setPanGestureRecognizer:(UIPanGestureRecognizer *)panGestureRecognizer
 {
-    [self willChangeValueForKey:@"panGestureRecognizer"];
+    [self willChangeValueForKey:@"jhPanGestureRecognizer"];
     
-    objc_setAssociatedObject(self, @selector(panGestureRecognizer), panGestureRecognizer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(jhPanGestureRecognizer), panGestureRecognizer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
-    [self didChangeValueForKey:@"panGestureRecognizer"];
+    [self didChangeValueForKey:@"jhPanGestureRecognizer"];
 }
 
-- (UIPanGestureRecognizer *)panGestureRecognizer
+- (UIPanGestureRecognizer *)jhPanGestureRecognizer
 {
-    return objc_getAssociatedObject(self, @selector(panGestureRecognizer));
+    return objc_getAssociatedObject(self, @selector(jhPanGestureRecognizer));
 }
 
 #pragma mark -
@@ -62,19 +62,19 @@
 {
     self.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    if(self.panGestureRecognizer == nil)
+    if(self.jhPanGestureRecognizer == nil)
     {
-        self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureHandler:)];
-        self.panGestureRecognizer.maximumNumberOfTouches = 1;
-        self.panGestureRecognizer.delegate = self;
+        self.jhPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureHandler:)];
+        self.jhPanGestureRecognizer.maximumNumberOfTouches = 1;
+        self.jhPanGestureRecognizer.delegate = self;
     }
-    [self addGestureRecognizer:self.panGestureRecognizer];
+    [self addGestureRecognizer:self.jhPanGestureRecognizer];
 }
 
 - (void)closeJHTableViewMenu
 {
-    [self removeGestureRecognizer:self.panGestureRecognizer];
-    self.panGestureRecognizer = nil;
+    [self removeGestureRecognizer:self.jhPanGestureRecognizer];
+    self.jhPanGestureRecognizer = nil;
     
     [self setTableViewCellMenuState:JHMenuTableViewCellState_Common];
 }
@@ -151,7 +151,7 @@
 #pragma mark - UIGestureRecognizerDelegate
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
-    if ( gestureRecognizer == self.panGestureRecognizer )
+    if ( gestureRecognizer == self.jhPanGestureRecognizer )
     {
         BOOL result = YES;
         if(self.currentMenuTableCell)
@@ -173,7 +173,7 @@
                 }
             }
         }
-        CGPoint translation = [self.panGestureRecognizer translationInView:self];
+        CGPoint translation = [self.jhPanGestureRecognizer translationInView:self];
         return (fabs(translation.y) <= fabs(translation.x)) && result;
     }
     else
