@@ -42,7 +42,7 @@
     return objc_getAssociatedObject(self, @selector(currentMenuTableCell));
 }
 
-- (void)setPanGestureRecognizer:(UIPanGestureRecognizer *)panGestureRecognizer
+- (void)setJhPanGestureRecognizer:(UIPanGestureRecognizer *)panGestureRecognizer
 {
     [self willChangeValueForKey:@"jhPanGestureRecognizer"];
     
