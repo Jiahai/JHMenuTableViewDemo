@@ -13,9 +13,6 @@ UITableview左右侧滑菜单
 * [配置JHMenuTableView参数](#config)
 * [效果图](#gif)
 
-###<a name="gif"/>效果图
-![](https://github.com/Jiahai/JHMenuTableViewDemo/blob/master/SnapShot/JHMenuTableViewDemo.gif)
-
 ###<a name="import"/>如何导入？
 * cocoapods导入： `pod 'JHMenuTableView'`
 * 手动导入：将`JHMenuTableView`文件夹中的所有文件添加至工程中
@@ -146,5 +143,8 @@ extern const NSInteger      kJHActionRightMoreButtonIndex;
 extern const BOOL           kJHMenuMoveAllRightCells;
 ```
 
+<a name="gif"/>
+###效果图
+![](https://github.com/Jiahai/JHMenuTableViewDemo/blob/master/SnapShot/JHMenuTableViewDemo.gif)
 
 
