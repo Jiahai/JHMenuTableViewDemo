@@ -2,33 +2,35 @@ JHMenuTableViewDemo
 ===
 UITableview左右侧滑菜单
 ---
-#V1.2版本新增功能
+##V1.2版本新增功能
 * 加入左侧侧滑菜单功能
 * 增加左/右菜单整体侧滑功能
 * 增加Delegate回调
 
-#目录
+##目录
 * [如何导入？](#import)
 * [如何使用？](#use)
 * [配置JHMenuTableView参数](#config)
 * [效果图](#gif)
+
 <a name="gif"/>
-##效果图
-![](https://github.com/Jiahai/JHMenuTableViewDemo/blob/master/SnapShot/JHMenuTableViewDemo.gif)
+###效果图
+![](https://github.com/Jiahai/JHMenuTableViewDemo/blob/master/SnapShot/JHMenuTableViewDemo.gif)<br>
+
 
 <a name="import"/>
-##如何导入？
+###如何导入？<br>
 * cocoapods导入： `pod 'JHMenuTableView'`
 * 手动导入：将`JHMenuTableView`文件夹中的所有文件添加至工程中
-
+<br>
 <a name="use"/>
-##如何使用？(具体请参看Demo)
-####导入头文件
+###如何使用？(具体请参看Demo)<br>
+####导入头文件<br>
 ```Objective-C
 #import "JHMenuTableView.h"
 ```
-
-####TableView调用openJHTableViewMenu方法
+<br>
+####TableView调用openJHTableViewMenu方法<br>
 ```Objective-C
 [_tableView openJHTableViewMenu];
 ```
@@ -90,7 +92,7 @@ self.actions = @[action];
 
 ```
 <a name="config"/>
-##配置JHMenuTableView参数
+###配置JHMenuTableView参数
 ####在JHMicro.h文件中配置JHMenuTableView参数
 
 ```Objective-C
