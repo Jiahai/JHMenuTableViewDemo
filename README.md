@@ -13,17 +13,14 @@ UITableview左右侧滑菜单
 * [配置JHMenuTableView参数](#config)
 * [效果图](#gif)
 
-<a name="gif"/>
-### 效果图
+###<a name="gif"/>效果图
 ![](https://github.com/Jiahai/JHMenuTableViewDemo/blob/master/SnapShot/JHMenuTableViewDemo.gif)
 
-<a name="import"/>
-### 如何导入？
+###<a name="import"/>如何导入？
 * cocoapods导入： `pod 'JHMenuTableView'`
 * 手动导入：将`JHMenuTableView`文件夹中的所有文件添加至工程中
 
-<a name="use"/>
-### 如何使用？(具体请参看Demo)
+###<a name="use"/>如何使用？(具体请参看Demo)
 #### 导入头文件
 ```Objective-C
 #import "JHMenuTableView.h"
@@ -90,8 +87,8 @@ self.actions = @[action];
 }
 
 ```
-<a name="config"/>
-### 配置JHMenuTableView参数
+
+### <a name="config"/>配置JHMenuTableView参数
 #### 在JHMicro.h文件中配置JHMenuTableView参数
 
 ```Objective-C
