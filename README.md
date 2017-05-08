@@ -1,12 +1,7 @@
 JHMenuTableViewDemo
-====
+===
 UITableview左右侧滑菜单
-----
-
-<a name="gif"/>
-##效果图
-![](https://github.com/Jiahai/JHMenuTableViewDemo/blob/master/SnapShot/JHMenuTableViewDemo.gif)
-
+---
 #V1.2版本新增功能
 * 加入左侧侧滑菜单功能
 * 增加左/右菜单整体侧滑功能
@@ -17,8 +12,11 @@ UITableview左右侧滑菜单
 * [如何使用？](#use)
 * [配置JHMenuTableView参数](#config)
 * [效果图](#gif)
+<a name="gif"/>
+##效果图
+![](https://github.com/Jiahai/JHMenuTableViewDemo/blob/master/SnapShot/JHMenuTableViewDemo.gif)
 
-<a name="import" />
+<a name="import"/>
 ##如何导入？
 * cocoapods导入： `pod 'JHMenuTableView'`
 * 手动导入：将`JHMenuTableView`文件夹中的所有文件添加至工程中
@@ -151,24 +149,4 @@ extern const BOOL           kJHMenuMoveAllRightCells;
 ```
 
 
-License (MIT)
-===========================================
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
 
